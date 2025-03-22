@@ -13,11 +13,6 @@ public class Graph{
     private int numNodes = 0;
     private int numEdges = 0;
 
-    public static void main(String[] args){
-        Graph g1 = new Graph("graph1.csv");
-        g1.print('e');
-    }
-
     // Create a Graph from CSV located at path pathToCSV
     // The CSV file should contain 4 columns: head, tail, weight, bidirectional
     // Adjacency matrices contain weights at [head][tail] (regardless of directionality), negative weights at [tail][head] if not a bidirectional edge
