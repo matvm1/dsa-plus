@@ -3,19 +3,19 @@ package structs.graph;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 public class Graph{
     private int[][] adjMatrix;
     private Map<Integer, Map<Integer, Integer>> adjMap;
+    private List<int[]> edgeList;
     private int maxWeightCharLen = 0;
+    private int numNodes = 0;
+    private int numEdges = 0;
 
     public static void main(String[] args){
         Graph g1 = new Graph("graph1.csv");
-        g1.print();
+        g1.print('e');
     }
 
     // Create a Graph from CSV located at path pathToCSV
@@ -29,8 +29,6 @@ public class Graph{
             br.mark(100000);
 
             HashSet<Integer> nodes = new HashSet<Integer>();
-            int numEdges = 0;
-            int numNodes = 0;
             int c = -1;
             while((c = br.read()) != -1){
                 nodes.add(c - '0');
@@ -43,6 +41,7 @@ public class Graph{
 
             adjMatrix = new int[numNodes][numNodes];
             adjMap = new HashMap<>();
+            edgeList = new ArrayList<>(numEdges);
 
             br.reset();
 
@@ -67,6 +66,8 @@ public class Graph{
                     adjMap.put(head, new HashMap<>());
                 adjMap.get(head).put(tail, weight * (bidirectional == 1 ? -1 : 1));
 
+                edgeList.add(new int[]{head, tail, weight, bidirectional});
+
                 maxWeightCharLen = Math.max(maxWeightCharLen, countDigits(adjMatrix[tail][head]));
             }
         } catch (Exception e) {
@@ -74,17 +75,26 @@ public class Graph{
         }
     }
 
-    // Pretty print a graph in the form of an adjacency matrix
-    public void print(){
-        int nodes = adjMatrix.length;
-        for (int[] matrix : adjMatrix) {
-            for (int weight: matrix) {
-                int currWeightCharLen = countDigits(weight);
-                for (int k = 0; k < maxWeightCharLen - currWeightCharLen; k++)
-                    System.out.print(" ");
-                System.out.print(weight + " ");
+    // Pretty print graph
+    // Params:
+    //      mode: 'm' - print adj matrix, 'a' - print adj list, 'e' - print edge list
+    public void print(char mode){
+        if(mode == 'm') {
+            for (int[] matrix : adjMatrix) {
+                for (int weight : matrix) {
+                    int currWeightCharLen = countDigits(weight);
+                    for (int k = 0; k < maxWeightCharLen - currWeightCharLen; k++)
+                        System.out.print(" ");
+                    System.out.print(weight + " ");
+                }
+                System.out.println();
             }
-            System.out.println();
+        }
+        else if(mode == 'a')
+            System.out.println(adjMap);
+        else if(mode == 'e') {
+            for(int[] edge: edgeList)
+                System.out.println(Arrays.toString(edge));
         }
     }
 
