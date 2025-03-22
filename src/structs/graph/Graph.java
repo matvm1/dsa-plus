@@ -8,6 +8,7 @@ import java.util.HashSet;
 
 public class Graph{
     private int[][] adjMatrix;
+    private int maxWeightCharLen = 0;
 
     public static void main(String[] args){
         Graph g1 = new Graph("graph1.csv");
@@ -64,6 +65,8 @@ public class Graph{
 
                 adjMatrix[head][tail] = weight;
                 adjMatrix[tail][head] = weight * (bidirectional == 1 ? 1 : -1);
+
+                maxWeightCharLen = Math.max(maxWeightCharLen, countDigits(adjMatrix[tail][head]));
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -72,14 +75,18 @@ public class Graph{
 
     public void print(){
         int nodes = adjMatrix.length;
-
-        for(int i = 0; i < nodes; i++)
-        {
-            for(int j = 0; j < nodes; j++)
-            {
-                System.out.print(adjMatrix[i][j] + " ");
+        for (int[] matrix : adjMatrix) {
+            for (int weight: matrix) {
+                int currWeightCharLen = countDigits(weight);
+                for (int k = 0; k < maxWeightCharLen - currWeightCharLen; k++)
+                    System.out.print(" ");
+                System.out.print(weight + " ");
             }
             System.out.println();
         }
+    }
+
+    public static int countDigits(int num) {
+        return (num == 0) ? 1 : (num < 0) ? (int) (Math.log10(num * -1) + 2) : (int) (Math.log10(num) + 1);
     }
 }
