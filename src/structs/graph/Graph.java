@@ -9,6 +9,7 @@ public class Graph{
     private int[][] adjMatrix;
     private Map<Integer, Map<Integer, Integer>> adjMap;
     private List<int[]> edgeList;
+    private final int edgeListWeightIndex = 2;
     private int maxWeightCharLen = 0;
     private int numNodes = 0;
     private int numEdges = 0;
@@ -95,6 +96,10 @@ public class Graph{
         edgeList.add(new int[]{head, tail, weight, bidirectional});
 
         maxWeightCharLen = Math.max(maxWeightCharLen, countDigits(adjMatrix[tail][head]));
+    }
+
+    public void sortEdgeList(){
+        edgeList.sort((a, b) -> Integer.compare(a[edgeListWeightIndex], b[edgeListWeightIndex]));
     }
 
     // Calculate the number of digits in a number
