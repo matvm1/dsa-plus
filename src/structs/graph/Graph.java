@@ -9,6 +9,8 @@ public class Graph{
     protected int[][] adjMatrix;
     protected Map<Integer, Map<Integer, Integer>> adjMap;
     protected List<int[]> edgeList;
+    private final int edgeListHeadIndex = 0;
+    private final int edgeListTaiIndex = 1;
     private final int edgeListWeightIndex = 2;
     private int maxWeightCharLen = 0;
     protected int numNodes = 0;
@@ -85,7 +87,7 @@ public class Graph{
         }
     }
 
-    // Adjaceny matrix ony handles a set of nodes s.t. the set can be represented by a contiguous array indexed from 0
+    // Adjaceny matrix only handles a set of nodes s.t. the set can be represented by a contiguous array indexed from 0
     // i.e. no gaps in the set, and must begin from 0
     public void addEdge(int head, int tail, int weight, int bidirectional){
         if(head >= adjMatrix.length)
@@ -114,6 +116,22 @@ public class Graph{
         edgeList.add(new int[]{head, tail, weight, bidirectional});
 
         maxWeightCharLen = Math.max(maxWeightCharLen, countDigits(adjMatrix[tail][head]));
+    }
+
+    public void removeEdge(int head, int tail){
+        if(head >= adjMatrix.length || tail >= adjMatrix.length){
+            System.out.println("Adjacency matrix length exceeded");
+            return;
+        }
+
+        adjMatrix[head][tail] = 0;
+        adjMatrix[tail][head] = 0;
+
+        adjMap.get(head).remove(tail);
+
+        edgeList.removeIf(e -> e[edgeListHeadIndex] == head && e[edgeListTaiIndex] == tail);
+
+        numEdges--;
     }
 
     public void sortEdgeList(){
