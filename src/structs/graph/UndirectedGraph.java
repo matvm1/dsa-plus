@@ -5,4 +5,17 @@ public class UndirectedGraph extends Graph{
     {
         super(pathToCSV);
     }
+
+    public Graph generateMinSpanTree(char mode) {
+        if(mode == 'k')
+            return generateMinSpanTreeKruskal();
+        //if(mode == 'p')
+        //    return generateMinSpanTreePrim();
+        return null;
+    }
+
+    private Graph generateMinSpanTreeKruskal(){
+        return null;
+    }
+
 }

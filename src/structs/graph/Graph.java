@@ -54,16 +54,7 @@ public class Graph{
                 bidirectional = br.read() - '0';
                 br.skip(1);
 
-                adjMatrix[head][tail] = weight;
-                adjMatrix[tail][head] = weight * (bidirectional == 1 ? 1 : -1);
-
-                if(!adjMap.containsKey(head))
-                    adjMap.put(head, new HashMap<>());
-                adjMap.get(head).put(tail, weight * (bidirectional == 1 ? -1 : 1));
-
-                edgeList.add(new int[]{head, tail, weight, bidirectional});
-
-                maxWeightCharLen = Math.max(maxWeightCharLen, countDigits(adjMatrix[tail][head]));
+                this.addEdge(head, tail, weight, bidirectional);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -91,6 +82,19 @@ public class Graph{
             for(int[] edge: edgeList)
                 System.out.println(Arrays.toString(edge));
         }
+    }
+
+    public void addEdge(int head, int tail, int weight, int bidirectional){
+        adjMatrix[head][tail] = weight;
+        adjMatrix[tail][head] = weight * (bidirectional == 1 ? 1 : -1);
+
+        if(!adjMap.containsKey(head))
+            adjMap.put(head, new HashMap<>());
+        adjMap.get(head).put(tail, weight * (bidirectional == 1 ? -1 : 1));
+
+        edgeList.add(new int[]{head, tail, weight, bidirectional});
+
+        maxWeightCharLen = Math.max(maxWeightCharLen, countDigits(adjMatrix[tail][head]));
     }
 
     // Calculate the number of digits in a number
