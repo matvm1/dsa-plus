@@ -8,7 +8,7 @@ public class demo{
         g1.sortEdgeList();
         g1.print('m');
         System.out.println();
-        System.out.println(g1.addEdgeIfAcyclic(2, 4,1, 0));
+        System.out.println(g1.addEdgeIfAcyclic(7, 5,7, 0));
         g1.print('m');
     }
 }

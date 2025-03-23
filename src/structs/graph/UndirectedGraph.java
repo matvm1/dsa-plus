@@ -20,22 +20,23 @@ public class UndirectedGraph extends Graph{
 
     public boolean addEdgeIfAcyclic(int head, int tail, int weight, int bidirectional){
         this.addEdge(head, tail, weight, bidirectional);
-        return containsCycle(head, head, new boolean[numNodes], 0);
+        return containsCycle(head, head, new boolean[numNodes], head);
     }
 
-    // O(V)
-    private boolean containsCycle(int origin, int node, boolean[] visited, int edgeCount){
+    // DFS with matrix
+    // O(V^2) - matrix representation -> Iterates over V nodes for each vertex. Worst case: graph is entirely connected
+    private boolean containsCycle(int origin, int node, boolean[] visited, int prevNode){
         visited[node] = true;
-        // Optimized solutions use a disjoint-set (union-find) to reduce space complexity
+        // Optimized solutions use a disjoint-set (union-find) to reduce space & time complexity
         for(int i = 0; i < numNodes; i++){
             if(adjMatrix[node][i] != 0) {
-                System.out.println("origin: " + origin + " head: " + node + " tail: " + i);
                 if(!visited[i]) {
-                    if (containsCycle(origin, i, visited, edgeCount + 1))
+                    if (containsCycle(origin, i, visited, node))
                         return true;
                 }
-                else if(i == origin && edgeCount > 0)
+                else if(i != prevNode) {
                     return true;
+                }
             }
         }
 
