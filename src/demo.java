@@ -6,6 +6,9 @@ public class demo{
         g1.print('e');
         System.out.println();
         g1.sortEdgeList();
-        g1.print('e');
+        g1.print('m');
+        System.out.println();
+        System.out.println(g1.addEdgeIfAcyclic(2, 4,1, 0));
+        g1.print('m');
     }
 }

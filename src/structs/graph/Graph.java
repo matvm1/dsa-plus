@@ -6,13 +6,13 @@ import java.io.FileReader;
 import java.util.*;
 
 public class Graph{
-    private int[][] adjMatrix;
-    private Map<Integer, Map<Integer, Integer>> adjMap;
-    private List<int[]> edgeList;
+    protected int[][] adjMatrix;
+    protected Map<Integer, Map<Integer, Integer>> adjMap;
+    protected List<int[]> edgeList;
     private final int edgeListWeightIndex = 2;
     private int maxWeightCharLen = 0;
-    private int numNodes = 0;
-    private int numEdges = 0;
+    protected int numNodes = 0;
+    protected int numEdges = 0;
 
     // Create a Graph from CSV located at path pathToCSV
     // The CSV file should contain 4 columns: head, tail, weight, bidirectional
@@ -33,9 +33,8 @@ public class Graph{
                 while(br.read() != '\n');
                 numEdges++;
             }
-            numNodes = nodes.size();
 
-            adjMatrix = new int[numNodes][numNodes];
+            adjMatrix = new int[nodes.size()][nodes.size()];
             adjMap = new HashMap<>();
             edgeList = new ArrayList<>(numEdges);
 
@@ -57,6 +56,7 @@ public class Graph{
 
                 this.addEdge(head, tail, weight, bidirectional);
             }
+            numNodes = nodes.size();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -85,12 +85,30 @@ public class Graph{
         }
     }
 
+    // Adjaceny matrix ony handles a set of nodes s.t. the set can be represented by a contiguous array indexed from 0
+    // i.e. no gaps in the set, and must begin from 0
     public void addEdge(int head, int tail, int weight, int bidirectional){
+        if(head >= adjMatrix.length)
+            numNodes++;
+        if(tail >= adjMatrix.length)
+            numNodes++;
+        numEdges++;
+
+        if(numNodes > adjMatrix.length)
+        {
+            int[][] adjMatrixTemp = new int[numNodes][numNodes];
+            for(int i = 0; i < adjMatrix.length; i++)
+                for(int j = 0; j < adjMatrix.length; j++)
+                    adjMatrixTemp[i][j] = adjMatrix[i][j];
+
+            adjMatrix = adjMatrixTemp;
+        }
         adjMatrix[head][tail] = weight;
         adjMatrix[tail][head] = weight * (bidirectional == 1 ? 1 : -1);
 
-        if(!adjMap.containsKey(head))
+        if(!adjMap.containsKey(head)) {
             adjMap.put(head, new HashMap<>());
+        }
         adjMap.get(head).put(tail, weight * (bidirectional == 1 ? -1 : 1));
 
         edgeList.add(new int[]{head, tail, weight, bidirectional});
