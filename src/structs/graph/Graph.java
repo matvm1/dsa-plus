@@ -33,7 +33,6 @@ public class Graph{
                 br.skip(1);
                 nodes.add(br.read() - '0');
                 while(br.read() != '\n');
-                numEdges++;
             }
 
             adjMatrix = new int[nodes.size()][nodes.size()];
@@ -89,6 +88,7 @@ public class Graph{
 
     // Adjaceny matrix only handles a set of nodes s.t. the set can be represented by a contiguous array indexed from 0
     // i.e. no gaps in the set, and must begin from 0
+    // TODO: Support gaps, independence between adjMatrix indexes and node values
     public void addEdge(int head, int tail, int weight, int bidirectional){
         if(head >= adjMatrix.length)
             numNodes++;
@@ -118,6 +118,8 @@ public class Graph{
         maxWeightCharLen = Math.max(maxWeightCharLen, countDigits(adjMatrix[tail][head]));
     }
 
+    // Removes an edge from this graph
+    // Does not remove nodes from adjMatrix
     public void removeEdge(int head, int tail){
         if(head >= adjMatrix.length || tail >= adjMatrix.length){
             System.out.println("Adjacency matrix length exceeded");
@@ -141,5 +143,13 @@ public class Graph{
     // Calculate the number of digits in a number
     public static int countDigits(int num){
         return (num == 0) ? 1 : (num < 0) ? (int) (Math.log10(num * -1) + 2) : (int) (Math.log10(num) + 1);
+    }
+
+    public int getNumNodes(){
+        return numNodes;
+    }
+
+    public int getNumEdges(){
+        return numEdges;
     }
 }
