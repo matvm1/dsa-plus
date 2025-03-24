@@ -9,11 +9,12 @@ public class Graph{
     protected int[][] adjMatrix;
     protected Map<Integer, Map<Integer, Integer>> adjMap;
     protected List<int[]> edgeList;
-    private final int edgeListHeadIndex = 0;
-    private final int edgeListTaiIndex = 1;
-    private final int edgeListWeightIndex = 2;
-    private int maxWeightCharLen = 0;
-    protected int numNodes = 0;
+    protected Set<Integer> nodeSet;
+    protected final int edgeListHeadIndex = 0;
+    protected final int edgeListTaiIndex = 1;
+    protected final int edgeListWeightIndex = 2;
+    protected final int edgeListBidirectionalIndex = 3;
+    protected int maxWeightCharLen = 0;
     protected int numEdges = 0;
 
     // Create a Graph from CSV located at path pathToCSV
@@ -26,16 +27,16 @@ public class Graph{
             while(br.read() != '\n');
             br.mark(100000);
 
-            HashSet<Integer> nodes = new HashSet<Integer>();
+            nodeSet = new HashSet<Integer>();
             int c = -1;
             while((c = br.read()) != -1){
-                nodes.add(c - '0');
+                nodeSet.add(c - '0');
                 br.skip(1);
-                nodes.add(br.read() - '0');
+                nodeSet.add(br.read() - '0');
                 while(br.read() != '\n');
             }
 
-            adjMatrix = new int[nodes.size()][nodes.size()];
+            adjMatrix = new int[nodeSet.size()][nodeSet.size()];
             adjMap = new HashMap<>();
             edgeList = new ArrayList<>(numEdges);
 
@@ -57,10 +58,17 @@ public class Graph{
 
                 this.addEdge(head, tail, weight, bidirectional);
             }
-            numNodes = nodes.size();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    // Creates an empty Graph with space allocation enough for numNodes nodes in the adjMatrix
+    public Graph(int numNodes){
+        adjMatrix = new int[numNodes][numNodes];
+        adjMap = new HashMap<>();
+        edgeList = new ArrayList<>();
+        nodeSet = new HashSet<>();
     }
 
     // Pretty print graph
@@ -90,15 +98,17 @@ public class Graph{
     // i.e. no gaps in the set, and must begin from 0
     // TODO: Support gaps, independence between adjMatrix indexes and node values
     public void addEdge(int head, int tail, int weight, int bidirectional){
-        if(head >= adjMatrix.length)
-            numNodes++;
-        if(tail >= adjMatrix.length)
-            numNodes++;
+        if(!nodeSet.contains(head)) {
+            nodeSet.add(head);
+        }
+        if(!nodeSet.contains(tail)){
+            nodeSet.add(tail);
+        }
         numEdges++;
 
-        if(numNodes > adjMatrix.length)
+        if(getNumNodes() > adjMatrix.length)
         {
-            int[][] adjMatrixTemp = new int[numNodes][numNodes];
+            int[][] adjMatrixTemp = new int[getNumNodes()][getNumNodes()];
             for(int i = 0; i < adjMatrix.length; i++)
                 for(int j = 0; j < adjMatrix.length; j++)
                     adjMatrixTemp[i][j] = adjMatrix[i][j];
@@ -119,7 +129,7 @@ public class Graph{
     }
 
     // Removes an edge from this graph
-    // Does not remove nodes from adjMatrix
+    // Does not remove nodes from adjMatrix or nodeSet
     public void removeEdge(int head, int tail){
         if(head >= adjMatrix.length || tail >= adjMatrix.length){
             System.out.println("Adjacency matrix length exceeded");
@@ -146,7 +156,7 @@ public class Graph{
     }
 
     public int getNumNodes(){
-        return numNodes;
+        return nodeSet.size();
     }
 
     public int getNumEdges(){
