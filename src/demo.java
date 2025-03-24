@@ -10,10 +10,8 @@ public class demo{
         System.out.println();
         System.out.println(g1.addEdgeIfAcyclic(7, 5,7, 0));
         g1.print('m');
-        g1.removeEdge(0, 1);
-        System.out.println();
-        g1.print('m');
         g1.print('a');
         g1.print('e');
+        System.out.println("num nodes: " + g1.getNumNodes() + " num edges: " + g1.getNumEdges());
     }
 }
