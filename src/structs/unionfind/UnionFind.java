@@ -3,36 +3,63 @@ package structs.unionfind;
 import java.util.Arrays;
 
 public class UnionFind {
-    private int[] components;
+    public int[] components;
+    private char mode;
 
     // mode:
-        // "e" - eager, pre-compute components structure
-    // O(n)
+        // 'f' - quick-find, eager (pre-compute components structure w/root during
+        //                          union)
+        // 'u' - quick-union, lazy (components trees are flattened only when a tree
+        //                          becomes too large)
     public UnionFind(int numNodes, char mode) {
-        if(mode == 'e') {
-            components = new int[numNodes];
-            for (int i = 0; i < numNodes; ++i)
-                components[i] = i;
-        }
+        if(mode == 'f' || mode == 'u')
+            this.mode = mode;
+        else
+            throw new RuntimeException("Mode '" + mode + "' is invalid for " +
+                    "UnionFind");
+
+        components = new int[numNodes];
+        for (int i = 0; i < numNodes; ++i)
+            components[i] = i;
     }
 
-    // O(n)
-    // O(n^2) to process n union operations
+    // Quick-Find: O(n)
+        // O(n^2) to process n union operations
     public void union(int p, int q) {
-        if(components[p] == components[q])
-            return;
+        if (mode == 'f'){
+            if(components[p] == components[q])
+                return;
 
-        int mergedComponent = components[p];
-        for (int i = 0; i < components.length; i++)
-        {
-            if (components[i] == mergedComponent)
-                components[i] = components[q];
+            int mergedComponent = components[p];
+            for (int i = 0; i < components.length; i++)
+            {
+                if (components[i] == mergedComponent)
+                    components[i] = components[q];
+            }
         }
     }
 
-    // O(1)
+    // Quick-Find: O(1)
     public boolean connected(int p, int q) {
-        return components[p] == components[q];
+        if(mode == 'f')
+            return components[p] == components[q];
+
+        // TODO
+        else return false;
+    }
+
+    public int root(int p) {
+        if (mode == 'f')
+            return components[p];
+
+        if(mode == 'u') {
+            while (components[p] != p)
+                p = components[p];
+
+            return p;
+        }
+
+        throw new RuntimeException("UnionFind mode not set for object " + System.identityHashCode(this));
     }
 
     public void print() {
