@@ -8,7 +8,7 @@ public class demo{
     }
 
     public static void unionFind() {
-        UnionFind uf1 = new UnionFind(10, 'e');
+        UnionFind uf1 = new UnionFind(10, 'f');
         uf1.union(4, 3);
         uf1.union(3, 8);
         uf1.union(6, 5);
@@ -21,6 +21,20 @@ public class demo{
         uf1.union(6, 1);
         uf1.union(6, 1);
         uf1.print();
+        System.out.println("Root of 2: " + uf1.root(2));
+
+        UnionFind uf2 = new UnionFind(10, 'u');
+        uf2.components[0] = 0;
+        uf2.components[1] = 1;
+        uf2.components[2] = 9;
+        uf2.components[3] = 4;
+        uf2.components[4] = 9;
+        uf2.components[5] = 6;
+        uf2.components[6] = 6;
+        uf2.components[7] = 7;
+        uf2.components[8] = 8;
+        uf2.components[9] = 9;
+        System.out.println(uf2.root(4));
     }
 
     public static void graphs() {
