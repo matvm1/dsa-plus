@@ -1,4 +1,5 @@
 import structs.graph.*;
+import structs.unionfind.UnionFind;
 
 public class demo{
     public static void main(String[] args){
@@ -7,7 +8,18 @@ public class demo{
     }
 
     public static void unionFind() {
-
+        UnionFind uf1 = new UnionFind(10, 'e');
+        uf1.union(4, 3);
+        uf1.union(3, 8);
+        uf1.union(6, 5);
+        uf1.union(9, 4);
+        uf1.union(2, 1);
+        uf1.print();
+        System.out.println(uf1.connected(8, 9));
+        uf1.union(5, 0);
+        uf1.union(7, 2);
+        uf1.union(6, 1);
+        uf1.print();
     }
 
     public static void graphs() {
