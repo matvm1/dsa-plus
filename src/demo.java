@@ -8,6 +8,7 @@ public class demo{
     }
 
     public static void unionFind() {
+        System.out.println("UnionFind w/Quick-Find (eager)");
         UnionFind uf1 = new UnionFind(10, 'f');
         uf1.union(4, 3);
         uf1.union(3, 8);
@@ -21,20 +22,27 @@ public class demo{
         uf1.union(6, 1);
         uf1.union(6, 1);
         uf1.print();
-        System.out.println("Root of 2: " + uf1.root(2));
+        System.out.println("Root of 2: " + uf1.find(2));
 
+        System.out.println();
+
+        System.out.println("UnionFind w/Quick-Union (lazy)");
         UnionFind uf2 = new UnionFind(10, 'u');
-        uf2.components[0] = 0;
-        uf2.components[1] = 1;
-        uf2.components[2] = 9;
-        uf2.components[3] = 4;
-        uf2.components[4] = 9;
-        uf2.components[5] = 6;
-        uf2.components[6] = 6;
-        uf2.components[7] = 7;
-        uf2.components[8] = 8;
-        uf2.components[9] = 9;
-        System.out.println(uf2.root(4));
+        uf2.union(4, 3);
+        uf2.union(3, 8);
+        uf2.union(6, 5);
+        uf2.union(9, 4);
+        uf2.union(2, 1);
+        uf2.print();
+        System.out.println("Root of 4: " + uf2.find(4));
+        System.out.println(uf2.connected(8, 9));
+        System.out.println(uf2.connected(5, 4));
+        uf2.union(5, 0);
+        uf2.union(7, 2);
+        uf2.union(6, 1);
+        uf2.union(7, 3);
+        uf2.print();
+        System.out.println(uf2.connected(6, 0));
     }
 
     public static void graphs() {
