@@ -19,6 +19,7 @@ public class demo{
         uf1.union(5, 0);
         uf1.union(7, 2);
         uf1.union(6, 1);
+        uf1.union(6, 1);
         uf1.print();
     }
 

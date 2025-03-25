@@ -7,6 +7,7 @@ public class UnionFind {
 
     // mode:
         // "e" - eager, pre-compute components structure
+    // O(n)
     public UnionFind(int numNodes, char mode) {
         if(mode == 'e') {
             components = new int[numNodes];
@@ -15,7 +16,12 @@ public class UnionFind {
         }
     }
 
+    // O(n)
+    // O(n^2) to process n union operations
     public void union(int p, int q) {
+        if(components[p] == components[q])
+            return;
+
         int mergedComponent = components[p];
         for (int i = 0; i < components.length; i++)
         {
@@ -24,6 +30,7 @@ public class UnionFind {
         }
     }
 
+    // O(1)
     public boolean connected(int p, int q) {
         return components[p] == components[q];
     }
