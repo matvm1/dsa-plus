@@ -42,7 +42,9 @@ public class demo{
         uf2.union(6, 1);
         uf2.union(7, 3);
         uf2.print();
-        System.out.println(uf2.connected(6, 0));
+        System.out.println(uf2.connected(3, 1));
+        //test path compression
+        uf2.print();
     }
 
     public static void graphs() {
