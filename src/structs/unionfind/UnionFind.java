@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 public class UnionFind {
     private int[] components;
+    private int[] sz;
     private char mode;
 
     // mode:
@@ -12,15 +13,28 @@ public class UnionFind {
         // 'u' - quick-union, lazy (components trees are flattened only when a tree
         //                          becomes too large)
     public UnionFind(int numNodes, char mode) {
-        if(mode == 'f' || mode == 'u')
+        if (mode == 'f') {
             this.mode = mode;
-        else
-            throw new RuntimeException("Mode '" + mode + "' is invalid for " +
-                    "UnionFind");
+            components = new int[numNodes];
+            for (int i = 0; i < numNodes; ++i)
+                components[i] = i;
+            return;
+        }
 
-        components = new int[numNodes];
-        for (int i = 0; i < numNodes; ++i)
-            components[i] = i;
+        if (mode == 'u') {
+            this.mode = mode;
+            components = new int[numNodes];
+            sz = new int[numNodes];
+            for (int i = 0; i < numNodes; ++i) {
+                components[i] = i;
+                sz[i] = 1;
+            }
+
+            return;
+        }
+
+        throw new IllegalArgumentException("Mode '" + mode + "' is invalid for " +
+                "UnionFind");
     }
 
     // Quick-Find: Theta(n)
@@ -29,9 +43,13 @@ public class UnionFind {
         // O(n)
             // O(n^2) in worst case (no path compression, linear tree generated w/ all
                 // elements connected) to process n union commands
-        // Omega(log n)
-            // O(n log n) in the best case (unions result in a complete binary tree)
-                // to process n union commands
+        // Omega(1) when doing union of two root nodes
+            // O(n) for n elements if always doing the union of 2 nodes
+    // Weighted Quick-Union using sz[]:
+        //  O(log n)
+            // O(n log n) for n union commands
+        // Omega(1) when doing union of two nodes
+            // O(n) if always doing union of two nodes
         // TODO: path compression
     public void union(int p, int q) {
         if (mode == 'f') {
@@ -53,8 +71,18 @@ public class UnionFind {
                 p = components[p];
 
             // check if they aren't connected already
-            if(components[p] != q)
-                components[p] = find(q);
+            if(components[p] != q) {
+                int qroot = find(q);
+                if (sz[p] >= sz[qroot]) {
+                    components[qroot] = p;
+                    sz[p] += sz[qroot];
+                }
+                else {
+                    components[p] = qroot;
+                    sz[qroot] += sz[p];
+                }
+                return;
+            }
 
             return;
         }
