@@ -7,17 +7,22 @@ public class LinkedList<T> implements List<T> {
     private ListNode<T> head;
     private ListNode<T> tail;
 
+    public LinkedList() {
+        size = 0;
+
+        head = null;
+        tail = null;
+    }
+
     public LinkedList(T[] arr) {
         size = 0;
 
-        for (T data: arr) {
-            if (!add(data))
-                throw new IllegalStateException("Failed to add the following data: " + data);
-        }
+        for (T data: arr)
+            add(data);
     }
 
     @Override
-    public boolean add(T data) {
+    public void add(T data) {
         ListNode<T> newNode = new ListNode<>(data);
         size++;
 
@@ -25,18 +30,29 @@ public class LinkedList<T> implements List<T> {
             head = newNode;
             head.next = tail;
             tail = head;
-            return true;
         }
 
         assert tail != null;
         tail.next = newNode;
         tail = newNode;
-
-        return true;
     }
 
+    public void prepend(T data) {
+        ListNode<T> newNode = new ListNode<>(data);
+        newNode.next = head;
+        head = newNode;
+        size++;
+    }
+
+    /*public void append(T data) {
+        ListNode<T> newNode = new ListNode<>(data);
+        tail.next = newNode;
+        tail = newNode;
+        size++;
+    }*/
+
     @Override
-    public boolean remove(int position) {
+    public T remove(int position) {
         if (position >= size)
             throw new IllegalArgumentException("Position " + position + " exceeds size of LinkedList " + size);
         if (position < 0)
@@ -45,10 +61,10 @@ public class LinkedList<T> implements List<T> {
         if (position == 0) {
             if (size == 1)
                 tail = head.next;
+            T res = head.data;
             head = head.next;
             size--;
-
-            return true;
+            return res;
         }
 
         ListNode<T> tmp = head;
@@ -56,10 +72,11 @@ public class LinkedList<T> implements List<T> {
             tmp = tmp.next;
             position--;
         }
+        T res = tmp.next.data;
         tmp.next = tmp.next.next;
 
         size--;
-        return true;
+        return res;
     }
 
     @Override
@@ -74,6 +91,9 @@ public class LinkedList<T> implements List<T> {
 
     @Override
     public String toString() {
+        if (head == null)
+            return null;
+
         StringBuilder sb = new StringBuilder("[");
 
         ListNode<T> tmp = head;
