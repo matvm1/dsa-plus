@@ -1,8 +1,8 @@
 package structs.collections;
 
 public interface List<T> {
-    boolean add(T data);
-    boolean remove(int index);
+    void add(T data);
+    T remove(int index);
     int size();
     boolean isEmpty();
 }

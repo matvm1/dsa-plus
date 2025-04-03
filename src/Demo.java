@@ -1,5 +1,4 @@
-import structs.collections.LinkedList;
-import structs.collections.ListNode;
+import structs.collections.*;
 import structs.graph.*;
 import structs.unionfind.UnionFind;
 
@@ -7,7 +6,32 @@ public class Demo {
     public static void main(String[] args){
         //graphs();
         //unionFind();
-        testLinkedLists();
+        //testLinkedLists();
+        stacks();
+    }
+
+    public static void stacks() {
+        ListNode<String> n = new ListNode<>("Hello");
+        System.out.println(n);
+
+        Integer[] strList = {1, 2, 3, 4, 5};
+        Stack<Integer> l1 = new Stack<>(strList);
+        System.out.println(l1);
+        System.out.println(l1.size());
+        System.out.println(l1.isEmpty());
+        System.out.println(l1.pop());
+        System.out.println(l1.peek());
+        System.out.println(l1);
+        l1.push(12);
+        System.out.println(l1);
+        l1.pop();
+        l1.pop();
+        l1.pop();
+        l1.pop();
+        l1.pop();
+        System.out.println(l1);
+        l1.push(1);
+        System.out.println(l1);
     }
 
     public static void testLinkedLists() {
