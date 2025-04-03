@@ -11,5 +11,12 @@ public class Main {
         System.out.println(l1.getHead());
         System.out.println(l1.getTail());
         System.out.println(l1.size());
+        System.out.println(l1.isEmpty());
+        l1.remove(2);
+        System.out.println(l1);
+        l1.remove(0);
+        System.out.println(l1);
+        l1.remove(l1.size() - 1);
+        System.out.println(l1);
     }
 }
