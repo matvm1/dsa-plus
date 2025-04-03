@@ -8,6 +8,8 @@ public class LinkedList<T> implements List<T> {
     private ListNode<T> tail;
 
     public LinkedList(T[] arr) {
+        size = 0;
+
         for (T data: arr) {
             if (!add(data))
                 throw new IllegalStateException("Failed to add the following data: " + data);
@@ -34,13 +36,30 @@ public class LinkedList<T> implements List<T> {
     }
 
     @Override
-    public boolean remove(T data) {
-        return false;
-    }
+    public boolean remove(int position) {
+        if (position >= size)
+            throw new IllegalArgumentException("Position " + position + " exceeds size of LinkedList " + size);
+        if (position < 0)
+            throw new IllegalArgumentException("Illegal LinkedList position: " + position);
 
-    @Override
-    public boolean remove(int index) {
-        return false;
+        if (position == 0) {
+            if (size == 1)
+                tail = head.next;
+            head = head.next;
+            size--;
+
+            return true;
+        }
+
+        ListNode<T> tmp = head;
+        while (position > 1) {
+            tmp = tmp.next;
+            position--;
+        }
+        tmp.next = tmp.next.next;
+
+        size--;
+        return true;
     }
 
     @Override
