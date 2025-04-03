@@ -1,10 +1,32 @@
+import structs.collections.LinkedList;
+import structs.collections.ListNode;
 import structs.graph.*;
 import structs.unionfind.UnionFind;
 
-public class demo{
+public class Demo {
     public static void main(String[] args){
         //graphs();
-        unionFind();
+        //unionFind();
+        testLinkedLists();
+    }
+
+    public static void testLinkedLists() {
+        ListNode<String> n = new ListNode<>("Hello");
+        System.out.println(n);
+
+        String[] strList = {"Hello", "Java", "World", "My", "Name", "Is", "Mateo"};
+        LinkedList<String> l1 = new LinkedList<>(strList);
+        System.out.println(l1);
+        System.out.println(l1.getHead());
+        System.out.println(l1.getTail());
+        System.out.println(l1.size());
+        System.out.println(l1.isEmpty());
+        l1.remove(2);
+        System.out.println(l1);
+        l1.remove(0);
+        System.out.println(l1);
+        l1.remove(l1.size() - 1);
+        System.out.println(l1);
     }
 
     public static void unionFind() {
