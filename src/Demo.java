@@ -8,33 +8,37 @@ public class Demo {
         //unionFind();
         //testLinkedLists();
         //stacks();
-        //queues();
+        queues();
     }
 
     public static void queues() {
-        Integer[] strList = {1, 2, 3, 4, 5};
-        Queue<Integer> l1 = new Queue<>(strList);
-        System.out.println(l1);
-        System.out.println(l1.size());
-        System.out.println(l1.isEmpty());
-        System.out.println(l1.dequeue());
-        System.out.println(l1.peek());
-        System.out.println(l1);
-        l1.enqueue(12);
-        System.out.println(l1);
-        l1.dequeue();
-        l1.dequeue();
-        l1.dequeue();
-        l1.dequeue();
-        l1.dequeue();
-        System.out.println(l1);
-        l1.enqueue(1);
-        System.out.println(l1);
-        for (int i = 2; i < 65; i *= 2)
-            l1.enqueue(i);
-        l1.enqueue(null);
-        System.out.println(l1);
-        System.out.println(l1.size());
+        Double[] doubleList = {1.0, 2.2, 3.3, 4.1, 5.3};
+        Queue<Double> q1 = new Queue<>(doubleList);
+        System.out.println(q1);
+
+        for (Double s : q1)
+            System.out.println("Iterator: " + s);
+
+        System.out.println(q1.size());
+        System.out.println(q1.isEmpty());
+        System.out.println(q1.dequeue());
+        System.out.println(q1.peek());
+        System.out.println(q1);
+        q1.enqueue(12.7);
+        System.out.println(q1);
+        q1.dequeue();
+        q1.dequeue();
+        q1.dequeue();
+        q1.dequeue();
+        q1.dequeue();
+        System.out.println(q1);
+        q1.enqueue(-0.9);
+        System.out.println(q1);
+        for (double i = 2; i < 65; i *= 2)
+            q1.enqueue(i);
+        q1.enqueue(null);
+        System.out.println(q1);
+        System.out.println(q1.size());
     }
 
     public static void stacks() {

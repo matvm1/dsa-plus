@@ -1,6 +1,8 @@
 package structs.collections;
 
-public class Queue<T> {
+import java.util.Iterator;
+
+public class Queue<T> implements Iterable<T> {
     private LinkedList<T> queue;
 
     public Queue(T[] data) {
@@ -31,5 +33,10 @@ public class Queue<T> {
 
     public String toString() {
         return queue.toString();
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return queue.iterator();
     }
 }
