@@ -105,10 +105,17 @@ public class LinkedList<T> implements List<T> {
 
         ListNode<T> tmp = head;
         while (tmp.next != null) {
-            sb.append(tmp.data.toString()).append(", ");
+            if (tmp.data == null)
+                sb.append("null").append(", ");
+            else
+                sb.append(tmp.data.toString()).append(", ");
             tmp = tmp.next;
         }
-        sb.append(tmp.data.toString()).append("]");
+        if (tmp.data == null)
+            sb.append("null");
+        else
+            sb.append(tmp.data.toString());
+        sb.append("]");
 
         return sb.toString();
     }
