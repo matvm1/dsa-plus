@@ -8,7 +8,7 @@ public class Demo {
         //unionFind();
         //testLinkedLists();
         //stacks();
-        queues();
+        //queues();
     }
 
     public static void queues() {
@@ -39,23 +39,27 @@ public class Demo {
 
     public static void stacks() {
         Integer[] strList = {1, 2, 3, 4, 5};
-        Stack<Integer> l1 = new Stack<>(strList);
-        System.out.println(l1);
-        System.out.println(l1.size());
-        System.out.println(l1.isEmpty());
-        System.out.println(l1.pop());
-        System.out.println(l1.peek());
-        System.out.println(l1);
-        l1.push(12);
-        System.out.println(l1);
-        l1.pop();
-        l1.pop();
-        l1.pop();
-        l1.pop();
-        l1.pop();
-        System.out.println(l1);
-        l1.push(1);
-        System.out.println(l1);
+        Stack<Integer> s1 = new Stack<>(strList);
+        System.out.println(s1);
+
+        for (Integer s : s1)
+            System.out.println("Iterator: " + s);
+
+        System.out.println(s1.size());
+        System.out.println(s1.isEmpty());
+        System.out.println(s1.pop());
+        System.out.println(s1.peek());
+        System.out.println(s1);
+        s1.push(12);
+        System.out.println(s1);
+        s1.pop();
+        s1.pop();
+        s1.pop();
+        s1.pop();
+        s1.pop();
+        System.out.println(s1);
+        s1.push(1);
+        System.out.println(s1);
     }
 
     public static void testLinkedLists() {
@@ -65,6 +69,10 @@ public class Demo {
         String[] strList = {"Hello", "Java", "World", "My", "Name", "Is", "Mateo"};
         LinkedList<String> l1 = new LinkedList<>(strList);
         System.out.println(l1);
+
+        for (String s : l1)
+            System.out.println("Iterator: " + s);
+
         System.out.println(l1.getHead());
         System.out.println(l1.getTail());
         System.out.println(l1.size());
