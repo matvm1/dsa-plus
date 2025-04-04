@@ -42,8 +42,8 @@ public class Demo {
     }
 
     public static void stacks() {
-        Integer[] strList = {1, 2, 3, 4, 5};
-        Stack<Integer> s1 = new Stack<>(strList);
+        Integer[] intList = {1, 2, 3, 4, 5};
+        Stack<Integer> s1 = new Stack<>(intList);
         System.out.println(s1);
 
         for (Integer s : s1)
