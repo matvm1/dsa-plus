@@ -32,6 +32,7 @@ public class Demo {
         System.out.println(l1);
         for (int i = 2; i < 65; i *= 2)
             l1.enqueue(i);
+        l1.enqueue(null);
         System.out.println(l1);
         System.out.println(l1.size());
     }
