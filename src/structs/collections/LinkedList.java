@@ -1,8 +1,9 @@
 package structs.collections;
 
-import java.util.Arrays;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
-public class LinkedList<T> implements List<T> {
+public class LinkedList<T> implements List<T>, Iterable<T> {
     private int size;
     private ListNode<T> head;
     private ListNode<T> tail;
@@ -112,5 +113,27 @@ public class LinkedList<T> implements List<T> {
 
     public ListNode<T> getTail() {
         return tail;
+    }
+
+    @Override
+    public Iterator<T> iterator() { return new ListIterator(); }
+
+    private class ListIterator implements Iterator<T> {
+        private ListNode<T> curr = head;
+
+        @Override
+        public boolean hasNext() {
+            return curr != null;
+        }
+
+        @Override
+        public T next() {
+            if (!hasNext())
+                throw new NoSuchElementException("End of list reached");
+
+            T prevData = curr.data;
+            curr = curr.next;
+            return prevData;
+        }
     }
 }
