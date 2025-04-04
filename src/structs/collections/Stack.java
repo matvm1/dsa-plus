@@ -1,6 +1,8 @@
 package structs.collections;
 
-public class Stack<T> {
+import java.util.Iterator;
+
+public class Stack<T> implements Iterable<T> {
     LinkedList<T> stack;
 
     public Stack(T[] data) {
@@ -28,6 +30,11 @@ public class Stack<T> {
 
     public boolean isEmpty() {
         return stack.isEmpty();
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return stack.iterator();
     }
 
     public String toString() {
