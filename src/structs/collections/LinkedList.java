@@ -44,12 +44,19 @@ public class LinkedList<T> implements List<T> {
         size++;
     }
 
-    /*public void append(T data) {
+    public void append(T data) {
         ListNode<T> newNode = new ListNode<>(data);
+        size++;
+
+        if (head == null) {
+            head = newNode;
+            tail = newNode;
+            return;
+        }
+
         tail.next = newNode;
         tail = newNode;
-        size++;
-    }*/
+    }
 
     @Override
     public T remove(int position) {

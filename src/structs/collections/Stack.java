@@ -1,7 +1,7 @@
 package structs.collections;
 
 public class Stack<T> {
-    LinkedList<T> stack;
+    private LinkedList<T> stack;
 
     public Stack(T[] data) {
         stack = new LinkedList<>();

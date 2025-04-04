@@ -7,13 +7,36 @@ public class Demo {
         //graphs();
         //unionFind();
         //testLinkedLists();
-        stacks();
+        //stacks();
+        queues();
+    }
+
+    public static void queues() {
+        Integer[] strList = {1, 2, 3, 4, 5};
+        Queue<Integer> l1 = new Queue<>(strList);
+        System.out.println(l1);
+        System.out.println(l1.size());
+        System.out.println(l1.isEmpty());
+        System.out.println(l1.dequeue());
+        System.out.println(l1.peek());
+        System.out.println(l1);
+        l1.enqueue(12);
+        System.out.println(l1);
+        l1.dequeue();
+        l1.dequeue();
+        l1.dequeue();
+        l1.dequeue();
+        l1.dequeue();
+        System.out.println(l1);
+        l1.enqueue(1);
+        System.out.println(l1);
+        for (int i = 2; i < 65; i *= 2)
+            l1.enqueue(i);
+        System.out.println(l1);
+        System.out.println(l1.size());
     }
 
     public static void stacks() {
-        ListNode<String> n = new ListNode<>("Hello");
-        System.out.println(n);
-
         Integer[] strList = {1, 2, 3, 4, 5};
         Stack<Integer> l1 = new Stack<>(strList);
         System.out.println(l1);
