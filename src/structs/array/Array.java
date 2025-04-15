@@ -24,6 +24,9 @@ public class Array {
     }
 
     private static <T extends Comparable<? super T>> void merge(T[] a, int lo, int mid, int hi) {
+        assert(isSorted(a, lo, mid - 1));
+        assert(isSorted(a, mid, hi));
+
         Comparable[] cpy = new Comparable[hi - lo + 1];
         System.arraycopy(a, lo , cpy, 0, hi - lo + 1);
 
@@ -49,6 +52,15 @@ public class Array {
             a[i + (j - mid)] = (T) cpy[j - lo];
             j++;
         }
+
+        assert(isSorted(a, lo, hi));
+    }
+
+    private static <T extends Comparable<? super T>> boolean isSorted(T[] a, int lo, int hi) {
+        for (int i = lo + 1; i < hi; i++)
+            if (a[i - 1].compareTo(a[i]) > 0)
+                return false;
+        return true;
     }
 
     @FunctionalInterface
