@@ -57,8 +57,43 @@ public class Array {
         assert(isSorted(a, lo, hi));
     }
 
-    //public static <T extends Comparable<? super T>> void quickSort(T[] a) {
-    //}
+    public static <T extends Comparable<? super T>> void quickSort(T[] a) {
+        shuffle(a);
+
+        quickSortHelper(a, 0, a.length - 1);
+    }
+
+    private static <T extends Comparable<? super T>> void quickSortHelper(T[] a, int lo, int hi) {
+        ThreeWayPartition p =  partition(a, 0, 0, a.length - 1);
+        quickSortHelper(a, 0, p.lt - 1);
+        quickSortHelper(a, p.gt + 1, a.length);
+    }
+
+    // 3 way partition <partitionItemIndex, ==partitionItemIndex, >partitionItemIndex
+    private static <T extends Comparable<? super T>> ThreeWayPartition partition(T[] a, int partitionItemIndex,
+                                                                 int lo, int hi) {
+        int lt = lo;
+        int gt = hi;
+        int i = lo;
+        T v = a[partitionItemIndex];
+
+        while (i <= gt) {
+            if (a[i].compareTo(v) < 0)
+                swap(a, lt++, i++);
+            else if (a[i].compareTo(v) > 0)
+                swap(a, gt--, i);
+            else
+                i++;
+        }
+
+        return new ThreeWayPartition(lt, gt);
+    }
+
+    public static <T> void swap(T[] a, int x, int y) {
+        T tmp = a[x];
+        a[x] = a[y];
+        a[y] = tmp;
+    }
 
     public static <T> void shuffle(T[] a) {
         int subArraySz = 2;
@@ -138,5 +173,16 @@ public class Array {
         System.out.println(Arrays.toString(nums2));
         shuffle(nums2);
         System.out.println(Arrays.toString(nums2));
+
+        Integer[] nums3 = {5, 3, 1, 5, 7, 1, 5, 9};
+        partition(nums3, 0, 0, nums3.length - 1);
+        System.out.println(Arrays.toString(nums3));
+    }
+
+    private static class ThreeWayPartition {
+        private int lt;
+        private int gt;
+
+        private ThreeWayPartition(int lt, int gt) {this.lt = lt; this.gt = gt;}
     }
 }
