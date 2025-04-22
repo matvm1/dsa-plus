@@ -64,9 +64,11 @@ public class Array {
     }
 
     private static <T extends Comparable<? super T>> void quickSortHelper(T[] a, int lo, int hi) {
-        ThreeWayPartition p =  partition(a, 0, 0, a.length - 1);
-        quickSortHelper(a, 0, p.lt - 1);
-        quickSortHelper(a, p.gt + 1, a.length);
+        if (lo >= hi)
+            return;
+        ThreeWayPartition p =  partition(a, lo, lo, hi);
+        quickSortHelper(a, lo, p.lt - 1);
+        quickSortHelper(a, p.gt + 1, hi);
     }
 
     // 3 way partition <partitionItemIndex, ==partitionItemIndex, >partitionItemIndex
@@ -177,6 +179,10 @@ public class Array {
         Integer[] nums3 = {5, 3, 1, 5, 7, 1, 5, 9};
         partition(nums3, 0, 0, nums3.length - 1);
         System.out.println(Arrays.toString(nums3));
+
+        Integer[] nums4 = {2, 4, 21, 1, 9, 0, -1, 9, 100, 1};
+        quickSort(nums4);
+        System.out.println(Arrays.toString(nums4));
     }
 
     private static class ThreeWayPartition {
