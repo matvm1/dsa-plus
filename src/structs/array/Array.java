@@ -61,6 +61,7 @@ public class Array {
         shuffle(a);
 
         quickSortHelper(a, 0, a.length - 1);
+        assert(isSorted(a, 0, a.length));
     }
 
     private static <T extends Comparable<? super T>> void quickSortHelper(T[] a, int lo, int hi) {
@@ -87,6 +88,8 @@ public class Array {
             else
                 i++;
         }
+
+        assert(isThreeWayPartitioned(a, lt, gt));
 
         return new ThreeWayPartition(lt, gt);
     }
@@ -155,6 +158,22 @@ public class Array {
         return true;
     }
 
+    public static <T extends Comparable<? super T>> boolean isThreeWayPartitioned(T[] a, int lt, int gt) {
+        for (int i = 0; i < lt; ++i)
+            if (a[i].compareTo(a[lt]) >= 0)
+                return false;
+
+        for (int i = gt + 1; i < a.length; ++i)
+            if (a[i].compareTo(a[lt]) <= 0)
+                return false;
+
+        for (int i = lt; i <= gt; ++i)
+            if (a[i].compareTo(a[lt]) != 0)
+                return false;
+
+        return true;
+    }
+
     @FunctionalInterface
     private interface SortCallback<T extends Comparable<? super T>> {
         void call(T[] elements);
@@ -177,12 +196,22 @@ public class Array {
         System.out.println(Arrays.toString(nums2));
 
         Integer[] nums3 = {5, 3, 1, 5, 7, 1, 5, 9};
-        partition(nums3, 0, 0, nums3.length - 1);
+        ThreeWayPartition p = partition(nums3, 0, 0, nums3.length - 1);
+        assert(isThreeWayPartitioned(nums3, p.lt, p.gt));
         System.out.println(Arrays.toString(nums3));
 
-        Integer[] nums4 = {2, 4, 21, 1, 9, 0, -1, 9, 100, 1};
-        quickSort(nums4);
+        Integer[] nums4 = {2, 4, 21, 1, 9, 0, -1, 9, 100, 101};
+        Array.sort(nums4, Array::quickSort);
         System.out.println(Arrays.toString(nums4));
+
+        Random rand = new Random();
+        int len = rand.nextInt(50000000);
+        Integer[] numsRand = new Integer[len];
+        for (int i = 0; i < len; ++i)
+            numsRand[i] = rand.nextInt();
+        //System.out.println(Arrays.toString(numsRand));
+        Array.sort(numsRand, Array::quickSort);
+        //System.out.println(Arrays.toString(numsRand));
     }
 
     private static class ThreeWayPartition {
