@@ -2,6 +2,7 @@ package structs.array;
 
 
 import java.util.Arrays;
+import java.util.Random;
 
 public class Array {
     public static <T extends Comparable<? super T>> void sort(T[] a, SortCallback<T> callback) {
@@ -56,7 +57,61 @@ public class Array {
         assert(isSorted(a, lo, hi));
     }
 
-    private static <T extends Comparable<? super T>> boolean isSorted(T[] a, int lo, int hi) {
+    //public static <T extends Comparable<? super T>> void quickSort(T[] a) {
+    //}
+
+    public static <T> void shuffle(T[] a) {
+        int subArraySz = 2;
+
+        while (subArraySz <= a.length) {
+            for (int i = 0; i < a.length; i += subArraySz) {
+                int hi = i + subArraySz - 1;
+                if (a.length - (hi + 1) < subArraySz)
+                    hi = a.length;
+                mergeShuffle(a, i, Math.min(hi, a.length - 1));
+            }
+            subArraySz *= 2;
+        }
+    }
+
+    private static <T> void mergeShuffle(T[] a, int lo, int hi) {
+        if (a.length < 2 || lo == hi)
+            return;
+
+        T[] cpy = (T[]) new Object[hi - lo + 1];
+        for (int i = lo; i <= hi; ++i)
+            cpy[i - lo] = a[i];
+
+        int mid = (hi - lo + 1) / 2 + lo;
+        int i = lo;
+        int j = mid;
+
+        Random rand = new Random();
+
+        while (i < mid && j <= hi) {
+            if (rand.nextBoolean()) {
+                a[i + j - mid] = cpy[i - lo];
+                i++;
+            }
+            else {
+                a[i + j - mid] = cpy[j - lo];
+                j++;
+            }
+        }
+
+        while (i < mid) {
+            a[i + j - mid] = cpy[i - lo];
+            i++;
+        }
+
+        while (j <= hi) {
+            a[i + j - mid] = cpy[j - lo];
+            j++;
+        }
+    }
+
+    public static <T extends Comparable<? super T>> boolean isSorted(T[] a, int lo,
+                                                                int hi) {
         for (int i = lo + 1; i < hi; i++)
             if (a[i - 1].compareTo(a[i]) > 0)
                 return false;
@@ -78,5 +133,10 @@ public class Array {
         System.out.println(Arrays.toString(names));
         Array.sort(names, Array::mergeSort);
         System.out.println(Arrays.toString(names));
+
+        Integer[] nums2 = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+        System.out.println(Arrays.toString(nums2));
+        shuffle(nums2);
+        System.out.println(Arrays.toString(nums2));
     }
 }
