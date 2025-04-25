@@ -77,6 +77,11 @@ public class Array {
         return getKthSmallestHelper(cpy, k - 1, 0, a.length - 1);
     }
 
+    public static <T extends Comparable<? super T>> T getKthLargest(T[] a, int k) {
+        T[] cpy = a.clone();
+        return getKthSmallestHelper(cpy, a.length - k, 0, a.length - 1);
+    }
+
     private static <T extends Comparable<? super T>> T getKthSmallestHelper(T[] a,
                                                                             int k, int lo, int hi) {
         ThreeWayPartition p = partition(a, (hi - lo + 1) / 2 + lo, lo, hi);
@@ -221,6 +226,9 @@ public class Array {
 
         for (int i = 1; i <= nums4.length; ++i)
             System.out.print(getKthSmallest(nums4, i) + " ");
+        System.out.println();
+        for (int i = 1; i <= nums4.length; ++i)
+            System.out.print(getKthLargest(nums4, i) + " ");
 
         System.out.println("\n" + Arrays.toString(nums4));
         Array.sort(nums4, Array::quickSort);
