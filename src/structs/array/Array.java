@@ -72,6 +72,23 @@ public class Array {
         quickSortHelper(a, p.gt + 1, hi);
     }
 
+    public static <T extends Comparable<? super T>> T getKthSmallest(T[] a, int k) {
+        T[] cpy = a.clone();
+        return getKthSmallestHelper(cpy, k - 1, 0, a.length - 1);
+    }
+
+    private static <T extends Comparable<? super T>> T getKthSmallestHelper(T[] a,
+                                                                            int k, int lo, int hi) {
+        ThreeWayPartition p = partition(a, (hi - lo + 1) / 2 + lo, lo, hi);
+
+        if (k >= p.lt && k <= p.gt)
+            return a[k];
+        else if (k < p.lt)
+            return getKthSmallestHelper(a, k, lo, p.lt - 1);
+        else
+            return getKthSmallestHelper(a, k, p.gt + 1, hi);
+    }
+
     // 3 way partition <partitionItemIndex, ==partitionItemIndex, >partitionItemIndex
     private static <T extends Comparable<? super T>> ThreeWayPartition partition(T[] a, int partitionItemIndex,
                                                                  int lo, int hi) {
@@ -201,11 +218,16 @@ public class Array {
         System.out.println(Arrays.toString(nums3));
 
         Integer[] nums4 = {2, 4, 21, 1, 9, 0, -1, 9, 100, 101};
+
+        for (int i = 1; i <= nums4.length; ++i)
+            System.out.print(getKthSmallest(nums4, i) + " ");
+
+        System.out.println("\n" + Arrays.toString(nums4));
         Array.sort(nums4, Array::quickSort);
         System.out.println(Arrays.toString(nums4));
 
         Random rand = new Random();
-        int len = rand.nextInt(50000000);
+        int len = rand.nextInt(50000);
         Integer[] numsRand = new Integer[len];
         for (int i = 0; i < len; ++i)
             numsRand[i] = rand.nextInt();
