@@ -8,7 +8,22 @@ public class Demo {
         //unionFind();
         //testLinkedLists();
         //stacks();
-        queues();
+        //queues();
+        binaryHeaps();
+    }
+
+    public static void binaryHeaps() {
+        BinaryHeap<Integer> bh1 = new BinaryHeap<>(BinaryHeap.HeapOrder.MAX);
+        bh1.insert(8);
+        bh1.insert(9);
+        bh1.insert(10);
+        bh1.insert(4);
+        bh1.insert(3);
+        bh1.insert(7);
+        bh1.insert(8);
+        bh1.insert(5);
+        bh1.insert(9);
+        System.out.println(bh1);
     }
 
     public static void queues() {
