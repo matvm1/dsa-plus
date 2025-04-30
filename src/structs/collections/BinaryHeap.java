@@ -6,7 +6,7 @@ public class BinaryHeap<T extends Comparable<? super T>> {
     private T[] heap;
     private int size;
     public enum HeapOrder {MIN, MAX};
-    private HeapOrder order;
+    private final HeapOrder order;
 
     public BinaryHeap(HeapOrder order) {
         heap = (T[]) new Comparable[2];
@@ -40,17 +40,15 @@ public class BinaryHeap<T extends Comparable<? super T>> {
         return item;
     }
 
-    // TODO: support minHeap
     private void swim(int index) {
-        while (index > 1 && heap[index].compareTo(heap[index / 2]) > 0) {
+        while (index > 1 && needsHeapify(index / 2, index)) {
             swap(index, index / 2);
             index /= 2;
         }
     }
 
-    // Sinks top node down
+    // Sinks node at index down
     // TODO: Support min heap
-    // TODO: Support sinking of any arbitrary node
     private void sink(int index) {
         while (index * 2 <= size) {
             int largerChild = (index * 2 + 1 > size) ? index * 2:
@@ -61,6 +59,11 @@ public class BinaryHeap<T extends Comparable<? super T>> {
             swap(index, largerChild);
             index = largerChild;
         }
+    }
+
+    private boolean needsHeapify(int parent, int child) {
+        return (order == HeapOrder.MAX && heap[parent].compareTo(heap[child]) < 0)
+                || (order == HeapOrder.MIN && heap[parent].compareTo(heap[child]) > 0);
     }
 
     private void resize(int n) {
@@ -81,9 +84,8 @@ public class BinaryHeap<T extends Comparable<? super T>> {
     }
 
     private boolean isHeapOrdered() {
-        if (order == HeapOrder.MAX)
             for (int i = 2; i <= size; ++i)
-                if (heap[i / 2].compareTo(heap[i]) < 0) {
+                if (needsHeapify(i / 2, i)) {
                     System.err.println(this);
                     System.err.println("Heap ordered violated. Parent: " + heap[i / 2] + " at " + i / 2 + "; Child: " + heap[i] + " at " + i + ";");
                     return false;

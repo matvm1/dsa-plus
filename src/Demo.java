@@ -27,19 +27,27 @@ public class Demo {
         Random rand = new Random();
         double min = -50.0;
         double max = 50.0;
-        for (int i = 0; i < 100000; ++i)
+        for (int i = 0; i < 100; ++i)
             bh2.insert(Math.round(min + (max - min) * rand.nextDouble() * 10.0) /
             10.0);
         while (!bh2.isEmpty())
             bh2.deleteTop();
-        for (int i = 0; i < 100000; ++i)
+        for (int i = 0; i < 100; ++i)
             bh2.insert(Math.round(min + (max - min) * rand.nextDouble() * 10.0) /
                     10.0);
-        //System.out.println(bh2);
-        //System.out.println(bh1.deleteTop());
-        //System.out.println(bh1);
-        //System.out.println(bh1.deleteTop());
-        //System.out.println(bh1);
+
+        BinaryHeap<Integer> bh3 = new BinaryHeap<>(BinaryHeap.HeapOrder.MIN);
+        Integer[] testMinHeap = {8, 9, 10, 4, 3, 7, 8, 5, 3, 9, 1, 0, 6, 2, -1};
+        for (Integer i : testMinHeap)
+            bh3.insert(i);
+        System.out.println(bh3);
+
+        BinaryHeap<Double> bh4 = new BinaryHeap<>(BinaryHeap.HeapOrder.MIN);
+        for (int i = 0; i < 100000; ++i)
+            bh4.insert(Math.round(min + (max - min) * rand.nextDouble() * 10.0) /
+                    10.0);
+        //System.out.println(bh3.deleteTop());
+        //System.out.println(bh3);
     }
 
     public static void queues() {
