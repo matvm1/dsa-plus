@@ -18,6 +18,10 @@ public class BinaryHeap<T extends Comparable<? super T>> {
 
     public boolean isEmpty() {return size == 0;}
 
+    public T peek() {
+        return (isEmpty()) ? null : heap[1];
+    }
+
     public void insert(T item) {
         if (size + 1 == heap.length)
             resize((size + 1) * 2);
@@ -29,7 +33,7 @@ public class BinaryHeap<T extends Comparable<? super T>> {
 
     // Dequeues top node
     // TODO: resize array if 25% empty
-    public T deleteTop() {
+    public T extract() {
         T item = heap[1];
         heap[1] = heap[size--];
         heap[size + 1] = null;
