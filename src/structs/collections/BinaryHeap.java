@@ -28,7 +28,6 @@ public class BinaryHeap<T extends Comparable<? super T>> {
     }
 
     // Dequeues top node
-    // TODO: support minHeap
     // TODO: resize array if 25% empty
     public T deleteTop() {
         T item = heap[1];
@@ -48,17 +47,27 @@ public class BinaryHeap<T extends Comparable<? super T>> {
     }
 
     // Sinks node at index down
-    // TODO: Support min heap
     private void sink(int index) {
         while (index * 2 <= size) {
-            int largerChild = (index * 2 + 1 > size) ? index * 2:
-                    (heap[index * 2].compareTo(heap[index * 2 + 1])) > 0 ?
-                    index * 2 : index * 2 + 1;
-            if (heap[index].compareTo(heap[largerChild]) > 0)
+            int promoted = promote(index);
+            if (!needsHeapify(index, promoted))
                 break;
-            swap(index, largerChild);
-            index = largerChild;
+            swap(index, promoted);
+            index = promoted;
         }
+    }
+
+    // returns the index of the child to promote when intending to promote
+    private int promote(int index) {
+        if (index * 2 + 1 > size)
+            return index * 2;
+
+        if (order == HeapOrder.MAX)
+            return (heap[index * 2].compareTo(heap[index * 2 + 1])) > 0 ?
+                            index * 2 : index * 2 + 1;
+
+        return (heap[index * 2].compareTo(heap[index * 2 + 1])) < 0 ?
+                index * 2 : index * 2 + 1;
     }
 
     private boolean needsHeapify(int parent, int child) {

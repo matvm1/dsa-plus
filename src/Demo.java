@@ -25,8 +25,8 @@ public class Demo {
 
         BinaryHeap<Double> bh2 = new BinaryHeap<>(BinaryHeap.HeapOrder.MAX);
         Random rand = new Random();
-        double min = -50.0;
-        double max = 50.0;
+        double min = -50000.0;
+        double max = 50000.0;
         for (int i = 0; i < 100; ++i)
             bh2.insert(Math.round(min + (max - min) * rand.nextDouble() * 10.0) /
             10.0);
@@ -41,13 +41,18 @@ public class Demo {
         for (Integer i : testMinHeap)
             bh3.insert(i);
         System.out.println(bh3);
+        System.out.println(bh3.deleteTop());
+        System.out.println(bh3);
 
         BinaryHeap<Double> bh4 = new BinaryHeap<>(BinaryHeap.HeapOrder.MIN);
         for (int i = 0; i < 100000; ++i)
             bh4.insert(Math.round(min + (max - min) * rand.nextDouble() * 10.0) /
                     10.0);
-        //System.out.println(bh3.deleteTop());
-        //System.out.println(bh3);
+        while (!bh4.isEmpty())
+            bh4.deleteTop();
+        for (int i = 0; i < 100000; ++i)
+            bh4.insert(Math.round(min + (max - min) * rand.nextDouble() * 10.0) /
+                    10.0);
     }
 
     public static void queues() {
