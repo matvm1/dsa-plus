@@ -2,6 +2,8 @@ import structs.collections.*;
 import structs.graph.*;
 import structs.unionfind.UnionFind;
 
+import java.util.Random;
+
 public class Demo {
     public static void main(String[] args){
         //graphs();
@@ -14,24 +16,26 @@ public class Demo {
 
     public static void binaryHeaps() {
         BinaryHeap<Integer> bh1 = new BinaryHeap<>(BinaryHeap.HeapOrder.MAX);
-        bh1.insert(8);
-        bh1.insert(9);
-        bh1.insert(10);
-        bh1.insert(4);
-        bh1.insert(3);
-        bh1.insert(7);
-        bh1.insert(8);
-        bh1.insert(5);
-        bh1.insert(3);
-        bh1.insert(9);
-        bh1.insert(1);
-        bh1.insert(0);
-        bh1.insert(6);
-        bh1.insert(2);
-        bh1.insert(-1);
+        Integer[] testMaxHeap = {8, 9, 10, 4, 3, 7, 8, 5, 3, 9, 1, 0, 6, 2, -1};
+        for (Integer i : testMaxHeap)
+            bh1.insert(i);
         System.out.println(bh1);
         System.out.println(bh1.deleteTop());
         System.out.println(bh1);
+
+        BinaryHeap<Double> bh2 = new BinaryHeap<>(BinaryHeap.HeapOrder.MAX);
+        Random rand = new Random();
+        double min = -50.0;
+        double max = 50.0;
+        for (int i = 0; i < 100000; ++i)
+            bh2.insert(Math.round(min + (max - min) * rand.nextDouble() * 10.0) /
+            10.0);
+        while (!bh2.isEmpty())
+            bh2.deleteTop();
+        for (int i = 0; i < 100000; ++i)
+            bh2.insert(Math.round(min + (max - min) * rand.nextDouble() * 10.0) /
+                    10.0);
+        //System.out.println(bh2);
         //System.out.println(bh1.deleteTop());
         //System.out.println(bh1);
         //System.out.println(bh1.deleteTop());

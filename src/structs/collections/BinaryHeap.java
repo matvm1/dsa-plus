@@ -14,12 +14,17 @@ public class BinaryHeap<T extends Comparable<? super T>> {
         this.order = order;
     }
 
+    public int size() {return size;}
+
+    public boolean isEmpty() {return size == 0;}
+
     public void insert(T item) {
         if (size + 1 == heap.length)
             resize((size + 1) * 2);
 
         heap[++size] = item;
         swim(size);
+        assert(isHeapOrdered());
     }
 
     // Dequeues top node
@@ -27,9 +32,10 @@ public class BinaryHeap<T extends Comparable<? super T>> {
     // TODO: resize array if 25% empty
     public T deleteTop() {
         T item = heap[1];
-        swap(1, size--);
-        sink(1);
+        heap[1] = heap[size--];
         heap[size + 1] = null;
+        sink(1);
+        assert(isHeapOrdered());
 
         return item;
     }
@@ -46,9 +52,12 @@ public class BinaryHeap<T extends Comparable<? super T>> {
     // TODO: Support min heap
     // TODO: Support sinking of any arbitrary node
     private void sink(int index) {
-        while (index * 2 < size) {
-            int largerChild = (heap[index * 2].compareTo(heap[index * 2 + 1])) > 0 ?
+        while (index * 2 <= size) {
+            int largerChild = (index * 2 + 1 > size) ? index * 2:
+                    (heap[index * 2].compareTo(heap[index * 2 + 1])) > 0 ?
                     index * 2 : index * 2 + 1;
+            if (heap[index].compareTo(heap[largerChild]) > 0)
+                break;
             swap(index, largerChild);
             index = largerChild;
         }
@@ -71,7 +80,20 @@ public class BinaryHeap<T extends Comparable<? super T>> {
         heap[j] = tmp;
     }
 
+    private boolean isHeapOrdered() {
+        if (order == HeapOrder.MAX)
+            for (int i = 2; i <= size; ++i)
+                if (heap[i / 2].compareTo(heap[i]) < 0) {
+                    System.err.println(this);
+                    System.err.println("Heap ordered violated. Parent: " + heap[i / 2] + " at " + i / 2 + "; Child: " + heap[i] + " at " + i + ";");
+                    return false;
+                }
+        return true;
+    }
+
     // pretty toString() provided by Claude Sonnet
+    // TODO: adjust level widths based on width of values
+    // TODO: fix right-side connectors
     public String toString() {
         if (heap == null || size <= 0 || heap.length <= 1) {
             return "Empty heap";
@@ -129,6 +151,8 @@ public class BinaryHeap<T extends Comparable<? super T>> {
             nodesInCurrentLevel *= 2;
             nodesToPrint = Math.min(nodesInCurrentLevel, size - (nodesInCurrentLevel - 1));
         }
+
+        result.append(Arrays.toString(heap));
 
         return result.toString();
     }
