@@ -22,11 +22,35 @@ public class BinaryHeap<T extends Comparable<? super T>> {
         swim(size);
     }
 
+    // Dequeues top node
+    // TODO: support minHeap
+    // TODO: resize array if 25% empty
+    public T deleteTop() {
+        T item = heap[1];
+        swap(1, size--);
+        sink(1);
+        heap[size + 1] = null;
+
+        return item;
+    }
+
     // TODO: support minHeap
     private void swim(int index) {
         while (index > 1 && heap[index].compareTo(heap[index / 2]) > 0) {
             swap(index, index / 2);
             index /= 2;
+        }
+    }
+
+    // Sinks top node down
+    // TODO: Support min heap
+    // TODO: Support sinking of any arbitrary node
+    private void sink(int index) {
+        while (index * 2 < size) {
+            int largerChild = (heap[index * 2].compareTo(heap[index * 2 + 1])) > 0 ?
+                    index * 2 : index * 2 + 1;
+            swap(index, largerChild);
+            index = largerChild;
         }
     }
 
@@ -47,7 +71,115 @@ public class BinaryHeap<T extends Comparable<? super T>> {
         heap[j] = tmp;
     }
 
+    // pretty toString() provided by Claude Sonnet
     public String toString() {
-        return Arrays.toString(heap);
+        if (heap == null || size <= 0 || heap.length <= 1) {
+            return "Empty heap";
+        }
+
+        StringBuilder result = new StringBuilder();
+
+        // Calculate the height of the heap
+        int height = (int) Math.ceil(Math.log(size + 1) / Math.log(2));
+
+        // Calculate the maximum width needed for printing
+        int maxWidth = (int) Math.pow(2, height) - 1;
+
+        // Build the heap level by level
+        int level = 0;
+        int nodesInCurrentLevel = 1;
+        int nodesToPrint = Math.min(nodesInCurrentLevel, size);
+        int index = 1; // Start from index 1 since heap[0] is null
+
+        while (index <= size) {
+            // Calculate spacing between nodes at this level
+            int nodeSeparation = maxWidth / (int) Math.pow(2, level);
+
+            // Add leading spaces for first node at this level
+            int leadingSpaces = (nodeSeparation - 1) / 2;
+            appendSpaces(result, leadingSpaces);
+
+            // Add nodes at this level
+            for (int i = 0; i < nodesToPrint; i++) {
+                // Convert the object to string with null check
+                String value = heap[index] == null ? "null" : heap[index].toString();
+                result.append(value);
+
+                // Add spaces between nodes at this level
+                if (i < nodesToPrint - 1) {
+                    appendSpaces(result, nodeSeparation);
+                }
+
+                index++;
+                // Stop if we've printed all nodes
+                if (index > size) {
+                    break;
+                }
+            }
+            result.append("\n");
+
+            // Add connecting lines if not the last level
+            if (level < height - 1 && index <= size) {
+                int nextLevelNodes = Math.min((int) Math.pow(2, level + 1), size - ((int) Math.pow(2, level) - 1));
+                appendConnectors(result, level, nodesToPrint, nodeSeparation, maxWidth, nextLevelNodes);
+            }
+
+            // Update for the next level
+            level++;
+            nodesInCurrentLevel *= 2;
+            nodesToPrint = Math.min(nodesInCurrentLevel, size - (nodesInCurrentLevel - 1));
+        }
+
+        return result.toString();
+    }
+
+    /**
+     * Helper method to append spaces to the StringBuilder
+     */
+    private void appendSpaces(StringBuilder sb, int count) {
+        for (int i = 0; i < count; i++) {
+            sb.append(" ");
+        }
+    }
+
+    /**
+     * Appends connector lines between levels to show parent-child relationships
+     */
+    private void appendConnectors(StringBuilder sb, int level, int levelNodes, int nodeSeparation, int maxWidth, int nodesNextLevel) {
+        StringBuilder connectorLine = new StringBuilder();
+
+        // Leading spaces for the first node
+        int leadingSpaces = (nodeSeparation - 1) / 2;
+        appendSpaces(connectorLine, leadingSpaces - 1);
+
+        for (int i = 0; i < levelNodes; i++) {
+            int leftChildIndex = 2 * (i + 1);
+            int rightChildIndex = 2 * (i + 1) + 1;
+
+            // Left connector
+            if (leftChildIndex <= nodesNextLevel) {
+                connectorLine.append("/");
+            } else {
+                connectorLine.append(" ");
+            }
+
+            // Spaces between left and right connectors
+            int middleSpace = nodeSeparation - 2; // -2 for the / and \ characters
+            appendSpaces(connectorLine, middleSpace);
+
+            // Right connector - explicitly use backslash
+            if (rightChildIndex <= nodesNextLevel) {
+                connectorLine.append("\\"); // Explicit backslash character
+            } else {
+                connectorLine.append(" ");
+            }
+
+            // Spaces between node groups
+            if (i < levelNodes - 1) {
+                appendSpaces(connectorLine, nodeSeparation - middleSpace - 2);
+            }
+        }
+
+        sb.append(connectorLine).append("\n");
     }
 }

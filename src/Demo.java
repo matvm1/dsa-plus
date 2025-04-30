@@ -22,8 +22,20 @@ public class Demo {
         bh1.insert(7);
         bh1.insert(8);
         bh1.insert(5);
+        bh1.insert(3);
         bh1.insert(9);
+        bh1.insert(1);
+        bh1.insert(0);
+        bh1.insert(6);
+        bh1.insert(2);
+        bh1.insert(-1);
         System.out.println(bh1);
+        System.out.println(bh1.deleteTop());
+        System.out.println(bh1);
+        //System.out.println(bh1.deleteTop());
+        //System.out.println(bh1);
+        //System.out.println(bh1.deleteTop());
+        //System.out.println(bh1);
     }
 
     public static void queues() {
