@@ -197,7 +197,7 @@ public class Array {
     }
 
     @FunctionalInterface
-    private interface SortCallback<T extends Comparable<? super T>> {
+    public interface SortCallback<T extends Comparable<? super T>> {
         void call(T[] elements);
     }
 

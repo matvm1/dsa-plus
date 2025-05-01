@@ -1,7 +1,9 @@
+import structs.array.Array;
 import structs.collections.*;
 import structs.graph.*;
 import structs.unionfind.UnionFind;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class Demo {
@@ -11,7 +13,8 @@ public class Demo {
         //testLinkedLists();
         //stacks();
         //queues();
-        binaryHeaps();
+        //binaryHeaps();
+        arrays();
     }
 
     public static void binaryHeaps() {
@@ -196,5 +199,46 @@ public class Demo {
 
         System.out.println("g1 contains cycle: " + g1.containsCycle());
         System.out.println("mst contains cycle: " + mst.containsCycle());
+    }
+
+    public static void arrays() {
+        Integer[] nums = {12, 4, 5, 6, 12, 1, 3, 9, 56, 0};
+        System.out.println(Arrays.toString(nums));
+        Array.sort(nums, Array::mergeSort);
+        System.out.println(Arrays.toString(nums));
+
+        String[] names = {"Charlie", "Abbie", "Ross", "Xander", "Zach", "Aaron", "Ross"};
+        System.out.println(Arrays.toString(names));
+        Array.sort(names, Array::mergeSort);
+        System.out.println(Arrays.toString(names));
+
+        Integer[] nums2 = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+        System.out.println(Arrays.toString(nums2));
+        Array.shuffle(nums2);
+        System.out.println(Arrays.toString(nums2));
+
+        Integer[] nums3 = {5, 3, 1, 5, 7, 1, 5, 9};
+        System.out.println(Arrays.toString(nums3));
+
+        Integer[] nums4 = {2, 4, 21, 1, 9, 0, -1, 9, 100, 101};
+
+        for (int i = 1; i <= nums4.length; ++i)
+            System.out.print(Array.getKthSmallest(nums4, i) + " ");
+        System.out.println();
+        for (int i = 1; i <= nums4.length; ++i)
+            System.out.print(Array.getKthLargest(nums4, i) + " ");
+
+        System.out.println("\n" + Arrays.toString(nums4));
+        Array.sort(nums4, Array::quickSort);
+        System.out.println(Arrays.toString(nums4));
+
+        Random rand = new Random();
+        int len = rand.nextInt(50000);
+        Integer[] numsRand = new Integer[len];
+        for (int i = 0; i < len; ++i)
+            numsRand[i] = rand.nextInt();
+        //System.out.println(Arrays.toString(numsRand));
+        Array.sort(numsRand, Array::quickSort);
+        //System.out.println(Arrays.toString(numsRand));
     }
 }
