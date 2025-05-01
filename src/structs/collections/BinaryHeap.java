@@ -27,10 +27,9 @@ public class BinaryHeap<T extends Comparable<? super T>> {
             size = items.length - 1;
         }
 
-        for (int i = size; i > 1; --i) {
+        for (int i = size; i > 1; --i)
             if (needsHeapify(i / 2, i))
                 sink(i / 2);
-        }
         assert(isHeapOrdered());
     }
 

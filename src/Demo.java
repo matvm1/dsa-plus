@@ -67,18 +67,21 @@ public class Demo {
         for (int i = 0; i < str.length(); i++) {
             testBinHeapConstruction[i] = str.charAt(i); // Autoboxing from char to Character
         }
-        BinaryHeap<Character> bh5 = new BinaryHeap<Character>(testBinHeapConstruction,
+        BinaryHeap<Character> bh5 = new BinaryHeap<>(testBinHeapConstruction,
                 BinaryHeap.HeapOrder.MAX);
         System.out.println(bh5);
 
-        int test6Size = 10000000;
+        int test6Size = 100000;
         Double[] testBinHeapConstruction2 = new Double[test6Size];
         for (int i = 0; i < test6Size; ++i)
             testBinHeapConstruction2[i] =
                     Math.round(min + (max - min) * rand.nextDouble() * 10.0) /
                     10.0;
-        BinaryHeap<Double> bh6 = new BinaryHeap<Double>(testBinHeapConstruction2,
+        BinaryHeap<Double> bh6 = new BinaryHeap<>(testBinHeapConstruction2,
                 BinaryHeap.HeapOrder.MIN);
+        System.out.println(bh6.size());
+        while(!bh6.isEmpty())
+            bh6.extract();
     }
 
     public static void queues() {
