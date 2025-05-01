@@ -32,12 +32,16 @@ public class BinaryHeap<T extends Comparable<? super T>> {
     }
 
     // Dequeues top node
-    // TODO: resize array if 25% empty
     public T extract() {
         T item = heap[1];
         heap[1] = heap[size--];
         heap[size + 1] = null;
         sink(1);
+
+        final double minCapacity = 0.25;
+        if ((double) size / heap.length <= minCapacity)
+            resize(heap.length / 2);
+
         assert(isHeapOrdered());
 
         return item;
