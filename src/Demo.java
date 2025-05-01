@@ -13,8 +13,8 @@ public class Demo {
         //testLinkedLists();
         //stacks();
         //queues();
-        //binaryHeaps();
-        arrays();
+        binaryHeaps();
+        //arrays();
     }
 
     public static void binaryHeaps() {
@@ -49,18 +49,36 @@ public class Demo {
         System.out.println(bh3.size());
 
         BinaryHeap<Double> bh4 = new BinaryHeap<>(BinaryHeap.HeapOrder.MIN);
-        for (int i = 0; i < 100000; ++i)
+        for (int i = 0; i < 1000; ++i)
             bh4.insert(Math.round(min + (max - min) * rand.nextDouble() * 10.0) /
                     10.0);
         System.out.println(bh4.size());
         while (!bh4.isEmpty())
             bh4.extract();
         System.out.println(bh4.size());
-        for (int i = 0; i < 100000; ++i)
+        for (int i = 0; i < 1000; ++i)
             bh4.insert(Math.round(min + (max - min) * rand.nextDouble() * 10.0) /
                     10.0);
         System.out.println(bh4.peek());
         System.out.println(bh4.size());
+
+        String str = "SORTEXAMPLE";
+        Character[] testBinHeapConstruction = new Character[str.length()];
+        for (int i = 0; i < str.length(); i++) {
+            testBinHeapConstruction[i] = str.charAt(i); // Autoboxing from char to Character
+        }
+        BinaryHeap<Character> bh5 = new BinaryHeap<Character>(testBinHeapConstruction,
+                BinaryHeap.HeapOrder.MAX);
+        System.out.println(bh5);
+
+        int test6Size = 10000000;
+        Double[] testBinHeapConstruction2 = new Double[test6Size];
+        for (int i = 0; i < test6Size; ++i)
+            testBinHeapConstruction2[i] =
+                    Math.round(min + (max - min) * rand.nextDouble() * 10.0) /
+                    10.0;
+        BinaryHeap<Double> bh6 = new BinaryHeap<Double>(testBinHeapConstruction2,
+                BinaryHeap.HeapOrder.MIN);
     }
 
     public static void queues() {

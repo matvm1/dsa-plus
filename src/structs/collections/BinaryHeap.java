@@ -14,6 +14,26 @@ public class BinaryHeap<T extends Comparable<? super T>> {
         this.order = order;
     }
 
+    public BinaryHeap(T[] items, HeapOrder order) {
+        this.order = order;
+        if (items[0] != null) {
+            heap = (T[]) new Comparable[items.length + 1];
+            for (int i = 1; i <= items.length; ++i)
+                heap[i] = items[i - 1];
+            size = items.length;
+        }
+        else {
+            heap = items.clone();
+            size = items.length - 1;
+        }
+
+        for (int i = size; i > 1; --i) {
+            if (needsHeapify(i / 2, i))
+                sink(i / 2);
+        }
+        assert(isHeapOrdered());
+    }
+
     public int size() {return size;}
 
     public boolean isEmpty() {return size == 0;}
@@ -46,6 +66,11 @@ public class BinaryHeap<T extends Comparable<? super T>> {
 
         return item;
     }
+
+    //public static <U extends Comparable<? super U>> BinaryHeap<U> heapify(U[] items,
+    //
+    //                                                                      HeapOrder o) {
+    //}
 
     private void swim(int index) {
         while (index > 1 && needsHeapify(index / 2, index)) {
