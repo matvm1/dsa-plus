@@ -1,6 +1,8 @@
 package structs.array;
 
 
+import structs.collections.BinaryHeap;
+
 import java.util.Arrays;
 import java.util.Random;
 
@@ -116,6 +118,53 @@ public class Array {
         return new ThreeWayPartition(lt, gt);
     }
 
+    public static <T extends Comparable<? super T>> void heapSort(T[] items) {
+        for (int i = items.length - 1; i > 1; --i) {
+            int parentIndex = getHeapParent(i);
+            if (items[parentIndex].compareTo(items[i]) < 0)
+                maxHeapSink(items, parentIndex, items.length - 1);
+        }
+        assert(isMaxHeapOrdered(items, items.length - 1));
+
+        int heapEndIndex = items.length - 1;
+        while (heapEndIndex > 0) {
+            swap(items, 0, heapEndIndex);
+            maxHeapSink(items, 0, --heapEndIndex);
+            //System.out.println(Arrays.toString(items) + " | " + (heapEndIndex + 1));
+            //assert(isMaxHeapOrdered(items, heapEndIndex));
+        }
+        assert(isSorted(items, 0, items.length));
+    }
+
+    private static <T extends Comparable<? super T>> void maxHeapSink(T[] items,
+                                                                      int i,
+                                                                      int heapSize) {
+        while (i * 2 + 1 <= heapSize) {
+            int largerChild = (i * 2 + 2 > heapSize) ? i * 2 + 1:
+                    (items[i * 2 + 1].compareTo(items[i * 2 + 2]) > 0) ? i * 2 + 1:
+                            i * 2 + 2;
+            if (items[i].compareTo(items[largerChild]) >= 0)
+                break;
+            swap(items, i, largerChild);
+            i = largerChild;
+        }
+    }
+
+    private static int getHeapParent(int i) {
+        return (i % 2 == 1) ? i / 2 : i / 2 - 1;
+    }
+
+    private static <T extends Comparable<? super T>> boolean isMaxHeapOrdered(T[] items, int heapEndIndex) {
+        for (int i = 1; i <= heapEndIndex; ++i)
+            if (items[getHeapParent(i)].compareTo(items[i]) < 0) {
+                System.err.println("Heap ordered violated. Parent: " + items[getHeapParent(i)] +
+                        " at " + getHeapParent(i) + "; Child: " + items[i] + " at " + i + ";");
+                System.err.println(Arrays.toString(items));
+                return false;
+            }
+        return true;
+    }
+
     public static <T> void swap(T[] a, int x, int y) {
         T tmp = a[x];
         a[x] = a[y];
@@ -175,8 +224,12 @@ public class Array {
     public static <T extends Comparable<? super T>> boolean isSorted(T[] a, int lo,
                                                                 int hi) {
         for (int i = lo + 1; i < hi; i++)
-            if (a[i - 1].compareTo(a[i]) > 0)
+            if (a[i - 1].compareTo(a[i]) > 0) {
+                System.err.println("Array out of order at (" + (i - 1) + ", " + i +
+                        ")");
+                System.err.println(Arrays.toString(a));
                 return false;
+            }
         return true;
     }
 

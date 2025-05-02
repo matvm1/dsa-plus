@@ -66,11 +66,6 @@ public class BinaryHeap<T extends Comparable<? super T>> {
         return item;
     }
 
-    //public static <U extends Comparable<? super U>> BinaryHeap<U> heapify(U[] items,
-    //
-    //                                                                      HeapOrder o) {
-    //}
-
     private void swim(int index) {
         while (index > 1 && needsHeapify(index / 2, index)) {
             swap(index, index / 2);

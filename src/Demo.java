@@ -13,8 +13,8 @@ public class Demo {
         //testLinkedLists();
         //stacks();
         //queues();
-        binaryHeaps();
-        //arrays();
+        //binaryHeaps();
+        arrays();
     }
 
     public static void binaryHeaps() {
@@ -261,5 +261,17 @@ public class Demo {
         //System.out.println(Arrays.toString(numsRand));
         Array.sort(numsRand, Array::quickSort);
         //System.out.println(Arrays.toString(numsRand));
+
+        Integer[] heapSortTest = {13, 33, 21, 14, 2, 28, 0, 38, 28, 26};
+        System.out.println(Arrays.toString(heapSortTest));
+        Array.sort(heapSortTest, Array::heapSort);
+        System.out.println(Arrays.toString(heapSortTest));
+
+        Integer[] numsRand2 = new Integer[100000000];
+        for (int i = 0; i < numsRand2.length; ++i)
+            numsRand2[i] = rand.nextInt(40);
+        //System.out.println(Arrays.toString(numsRand2));
+        Array.sort(numsRand2, Array::heapSort);
+        //System.out.println(Arrays.toString(numsRand2));
     }
 }
