@@ -14,7 +14,8 @@ public class Demo {
         //stacks();
         //queues();
         //binaryHeaps();
-        arrays();
+        //arrays();
+        BSTMaps();
     }
 
     public static void binaryHeaps() {
@@ -273,5 +274,46 @@ public class Demo {
         //System.out.println(Arrays.toString(numsRand2));
         Array.sort(numsRand2, Array::heapSort);
         //System.out.println(Arrays.toString(numsRand2));
+    }
+
+    public static void BSTMaps() {
+        BSTMap<Integer, String> nbaRankings = new BSTMap<>();
+        nbaRankings.insert(20, "Dallas Mavericks");
+        nbaRankings.insert(1, "Oklahoma City Thunder");
+        nbaRankings.insert(28, "New Orleans Pelicans");
+        nbaRankings.insert(6, "Denver Nuggets");
+        nbaRankings.insert(9, "New York Knicks");
+        nbaRankings.insert(13, "Memphis Grizzlies");
+        nbaRankings.insert(5, "Los Angeles Lakers");
+        nbaRankings.insert(27, "Charlotte Hornets");
+        nbaRankings.insert(17, "Sacramento Kings");
+        nbaRankings.insert(11, "Milwaukee Bucks");
+        nbaRankings.insert(10, "Indiana Pacers");
+        nbaRankings.insert(25, "Brooklyn Nets");
+        nbaRankings.insert(8, "Minnesota Timberwolves");
+        nbaRankings.insert(2, "Cleveland Cavaliers");
+        nbaRankings.insert(16, "Atlanta Hawks");
+        nbaRankings.insert(24, "Toronto Raptors");
+        nbaRankings.insert(3, "Boston Celtics");
+        nbaRankings.insert(21, "Phoenix Suns");
+        nbaRankings.insert(14, "Detroit Pistons");
+        nbaRankings.insert(30, "Utah Jazz");
+        nbaRankings.insert(7, "Los Angeles Clippers");
+        nbaRankings.insert(4, "Houston Rockets");
+        nbaRankings.insert(12, "Golden State Warriors");
+        nbaRankings.insert(19, "Miami Heat");
+        nbaRankings.insert(22, "Portland Trail Blazers");
+        nbaRankings.insert(15, "Orlando Magic");
+        nbaRankings.insert(18, "Chicago Bulls");
+        nbaRankings.insert(23, "San Antonio Spurs");
+        nbaRankings.insert(26, "Philadelphia 76ers");
+        nbaRankings.insert(29, "Washington Wizards");
+        nbaRankings.insert(29, "Some Other NBA Team");
+        nbaRankings.insert(29, "Washington Wizards");
+        nbaRankings.insert(20, "Dallas Cowboys");
+        nbaRankings.insert(20, "Dallas Mavericks");
+        nbaRankings.insert(15, "Seattle Supersonics");
+        nbaRankings.insert(15, "Orlando Magic");
+        System.out.println(nbaRankings);
     }
 }
