@@ -7,6 +7,10 @@ public class BSTMap<Key extends Comparable<Key>, Value> {
         root = null;
     }
 
+    public int size() {
+        return size(root);
+    }
+
     public void insert(Key key, Value value) {
         if (key == null)
             throw new IllegalArgumentException();
@@ -41,14 +45,14 @@ public class BSTMap<Key extends Comparable<Key>, Value> {
         // no insertion, undo size increments
         else {
             curr = root;
-            do {
+            while (curr.key != key) {
                 curr.size--;
                 int cmp = key.compareTo(curr.key);
                 if (cmp < 0)
                     curr = curr.left;
                 else if (cmp > 0)
                     curr = curr.right;
-            } while (curr.key != key);
+            }
             curr.size--;
         }
 

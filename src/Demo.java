@@ -315,5 +315,6 @@ public class Demo {
         nbaRankings.insert(15, "Seattle Supersonics");
         nbaRankings.insert(15, "Orlando Magic");
         System.out.println(nbaRankings);
+        System.out.println(nbaRankings.size());
     }
 }
