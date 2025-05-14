@@ -277,6 +277,9 @@ public class Demo {
     }
 
     public static void BSTMaps() {
+        BSTMap<Integer, Integer> b1 = new BSTMap<>();
+        System.out.println(b1);
+
         BSTMap<Integer, String> nbaRankings = new BSTMap<>();
         nbaRankings.insert(20, "Dallas Mavericks");
         nbaRankings.insert(1, "Oklahoma City Thunder");
@@ -316,5 +319,9 @@ public class Demo {
         nbaRankings.insert(15, "Orlando Magic");
         System.out.println(nbaRankings);
         System.out.println(nbaRankings.size());
+        System.out.println(nbaRankings.rank(1));
+        System.out.println(nbaRankings.rank(14));
+        System.out.println(nbaRankings.rank(29));
+        System.out.println(nbaRankings.rank(12));
     }
 }

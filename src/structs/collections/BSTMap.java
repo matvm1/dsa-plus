@@ -1,5 +1,7 @@
 package structs.collections;
 
+import java.util.NoSuchElementException;
+
 public class BSTMap<Key extends Comparable<Key>, Value> {
     private Node<Key, Value> root;
 
@@ -59,6 +61,27 @@ public class BSTMap<Key extends Comparable<Key>, Value> {
         assert(isBST());
     }
 
+    public Value rank(int k) {
+        if (k < 1)
+            throw new IllegalArgumentException();
+        if (k > size())
+            throw new NoSuchElementException();
+
+        Node<Key, Value> curr = root;
+        int rank = size(curr) - size(curr.right);
+        while (rank != k) {
+            if (rank > k) {
+                curr = curr.left;
+                rank -= size(curr.right) + 1;
+            }
+            else {
+                curr = curr.right;
+                rank += size(curr.left) + 1;
+            }
+        }
+        return curr.value;
+    }
+
     private static <Key extends Comparable<Key>, Value> int size(Node<Key, Value> node) {
         return (node == null) ? 0 : node.size;
     }
@@ -74,11 +97,8 @@ public class BSTMap<Key extends Comparable<Key>, Value> {
 
         toStringBuilder(node.left, sb, recursionLevel + 1);
         sb.append("-".repeat(recursionLevel))
-                .append("[")
-                .append(node.key)
-                .append("](")
-                .append(node.size)
-                .append(")")
+                .append("[").append(node.key).append("](")
+                .append(node.size).append(")")
                 .append(node.value).append("\n");
         toStringBuilder(node.right, sb, recursionLevel + 1);
 
