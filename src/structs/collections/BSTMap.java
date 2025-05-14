@@ -61,12 +61,35 @@ public class BSTMap<Key extends Comparable<Key>, Value> {
         assert(isBST());
     }
 
+    public int rank(Key key) {
+        Node<Key, Value> curr = root;
+        int rank = size(curr) - size(curr.right);
+        int cmp = key.compareTo(curr.key);
+        while (cmp != 0) {
+            if (cmp < 0) {
+                curr = curr.left;
+                if (curr == null)
+                    return -1;
+                rank -= size(curr.right) + 1;
+            }
+            else {
+                curr = curr.right;
+                if (curr == null)
+                    return -1;
+                rank += size(curr.left) + 1;
+            }
+            cmp = key.compareTo(curr.key);
+        }
+        return rank - 1;
+    }
+
     public Value select(int k) {
-        if (k < 1)
+        if (k < 0)
             throw new IllegalArgumentException();
         if (k > size())
             throw new NoSuchElementException();
 
+        k += 1;
         Node<Key, Value> curr = root;
         int rank = size(curr) - size(curr.right);
         while (rank != k) {
