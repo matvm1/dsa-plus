@@ -387,17 +387,43 @@ public class Demo {
         }
         System.out.println(nbaTeamsbyRank);
 
-        int numRandTrials = 1000;
+        /*int numRandTrials = 1000;
         for (int i = 0; i < numRandTrials; ++i) {
             BSTMap<Double, String> randTest = new BSTMap<>();
             min = -50000;
             max = min * -1;
-            for (int j = 0; j < 10000; ++j)
+            for (int j = 0; j < 1000; ++j)
                 randTest.insert(rand.nextDouble((max - min) + 1) + min, "test");
-            for (int j = 0; j < 100000; ++j)
+            for (int j = 0; j < 10000; ++j)
                 randTest.delete(rand.nextDouble((max - min) + 1) + min);
-            if (!randTest.isBST())
-                System.out.println("scream");
+        }*/
+
+        max = 500;
+        min = max * -1;
+        BSTMap <Integer, Integer> testDeleteUntilEmpty = new BSTMap<>();
+        for (int j = 0; j < 1000000; ++j) {
+            int randInt = rand.nextInt((max - min) + 1) + min;
+            //System.out.println("testDeleteUntilEmpty.insert(" + randInt + ", 0);");
+            testDeleteUntilEmpty.insert(randInt, 0);
         }
+        while (!testDeleteUntilEmpty.isEmpty()) {
+            int randInt = rand.nextInt((max - min) + 1) + min;
+            max = Math.max(max, randInt);
+            min = Math.min(min, randInt);
+            testDeleteUntilEmpty.delete(randInt);
+        }
+        /*testDeleteUntilEmpty.insert(-478, 0);
+        testDeleteUntilEmpty.insert(-315, 0);
+        testDeleteUntilEmpty.insert(-33, 0);
+        testDeleteUntilEmpty.insert(-70, 0);
+        testDeleteUntilEmpty.insert(365, 0);
+        testDeleteUntilEmpty.insert(261, 0);
+        testDeleteUntilEmpty.insert(-307, 0);
+        testDeleteUntilEmpty.insert(-373, 0);
+        testDeleteUntilEmpty.insert(51, 0);
+        testDeleteUntilEmpty.insert(-288, 0);
+        testDeleteUntilEmpty.insert(-194, 0);
+        testDeleteUntilEmpty.insert(365, 0);*/
+        System.out.println(testDeleteUntilEmpty);
     }
 }

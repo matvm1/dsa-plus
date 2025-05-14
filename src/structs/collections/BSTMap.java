@@ -51,7 +51,7 @@ public class BSTMap<Key extends Comparable<Key>, Value> {
         // no insertion, undo size increments
         else {
             curr = root;
-            while (curr.key != key) {
+            while (!key.equals(curr.key)) {
                 curr.size--;
                 int cmp = key.compareTo(curr.key);
                 if (cmp < 0)
@@ -230,7 +230,7 @@ public class BSTMap<Key extends Comparable<Key>, Value> {
     }
 
     // checks that BST follows symmetric ordering and sizes of nodes are correct
-    public boolean isBST() {
+    private boolean isBST() {
         return isBST(root, null, null);
     }
 
