@@ -105,11 +105,91 @@ public class BSTMap<Key extends Comparable<Key>, Value> {
         return curr.value;
     }
 
+    // TODO: update sizes
+    public void delete(Key key) {
+        if (root == null)
+            return;
+
+        Node<Key, Value> parent = null;
+        Node<Key, Value> searchNode = root;
+
+        int cmp = key.compareTo(searchNode.key);
+        // search for the node to delete
+        while (cmp != 0) {
+            parent = searchNode;
+            if (cmp < 0)
+                searchNode = searchNode.left;
+            else
+                searchNode = searchNode.right;
+            if (searchNode == null)
+                return;
+            cmp = key.compareTo(searchNode.key);
+        }
+
+        // check if the node being deleted is the root
+        if (parent == null) {
+            parent = new Node<>(null, null);
+            parent.left = root;
+        }
+
+        // Hibbard deletion
+        boolean isDeletingFromParentLeft =
+                parent.left != null && key.equals(parent.left.key);
+        if (searchNode.left == null && searchNode.right == null)
+            if (isDeletingFromParentLeft)
+                parent.left = null;
+            else
+                parent.right = null;
+        else if (searchNode.left != null && searchNode.right == null)
+            if (isDeletingFromParentLeft)
+                parent.left = searchNode.left;
+            else
+                parent.right = searchNode.left;
+        else if (searchNode.left == null)
+            if (isDeletingFromParentLeft)
+                parent.left = searchNode.right;
+            else
+                parent.right = searchNode.right;
+        else {
+            Node<Key, Value> successorParent = searchNode;
+            Node<Key, Value> successor = searchNode.right;
+            while (successor.left != null) {
+                successorParent = successor;
+                successor = successor.left;
+            }
+            if (isDeletingFromParentLeft)
+                parent.left = successor;
+            else
+                parent.right = successor;
+
+            successor.left = searchNode.left;
+            // check that the successor's parent isnt being deleted
+            if (!successorParent.key.equals(searchNode.key)) {
+                successorParent.left = successor.right;
+                successor.right = searchNode.right;
+            }
+
+            // reassign root if it was the search node
+            if (parent.key == null)
+                root = successor;
+        }
+        if (parent.key == null)
+            if (root.left == null && root.right == null)
+                root = null;
+            else if (root.left != null && root.right == null)
+                root = root.left;
+            else if (root.left == null)
+                root = root.right;
+        assert(isBST());
+    }
+
     private static <Key extends Comparable<Key>, Value> int size(Node<Key, Value> node) {
         return (node == null) ? 0 : node.size;
     }
 
     public String toString() {
+        if (root == null)
+            return "null";
         return toStringBuilder(root, new StringBuilder(), 0).toString();
     }
 

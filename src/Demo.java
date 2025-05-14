@@ -329,5 +329,61 @@ public class Demo {
         System.out.println(nbaTeamsbyRank.rank(31));
         for (int i = 1; i <= nbaTeamsbyRank.size(); ++i)
             System.out.println(nbaTeamsbyRank.rank(i));
+
+        System.out.println("Test delete(): ");
+        /*nbaTeamsbyRank.delete(4);
+        nbaTeamsbyRank.delete(2);
+        nbaTeamsbyRank.delete(15);
+        nbaTeamsbyRank.delete(16);
+        nbaTeamsbyRank.delete(17);
+        nbaTeamsbyRank.delete(9);
+        nbaTeamsbyRank.delete(20);
+        nbaTeamsbyRank.delete(9);
+        nbaTeamsbyRank.delete(-1);
+        nbaTeamsbyRank.delete(31);*/
+
+        /*nbaTeamsbyRank.delete(29);
+        nbaTeamsbyRank.delete(0);
+        nbaTeamsbyRank.delete(29);
+        nbaTeamsbyRank.delete(9);
+        nbaTeamsbyRank.delete(29);
+        nbaTeamsbyRank.delete(18);*/
+
+        /*nbaTeamsbyRank.delete(27);
+        nbaTeamsbyRank.delete(20);
+        nbaTeamsbyRank.delete(7);
+        nbaTeamsbyRank.delete(30);
+        nbaTeamsbyRank.delete(29);
+        nbaTeamsbyRank.delete(5);
+        nbaTeamsbyRank.delete(8);
+        nbaTeamsbyRank.delete(29);
+        nbaTeamsbyRank.delete(14);
+        nbaTeamsbyRank.delete(5);
+        nbaTeamsbyRank.delete(1);
+        nbaTeamsbyRank.delete(17);
+        nbaTeamsbyRank.delete(2);
+        nbaTeamsbyRank.delete(4);
+        nbaTeamsbyRank.delete(9);
+        nbaTeamsbyRank.delete(4);
+        nbaTeamsbyRank.delete(30);
+        nbaTeamsbyRank.delete(16);
+        nbaTeamsbyRank.delete(6);*/
+
+        /*for (int i = 1; i <= 20; ++i)
+            nbaTeamsbyRank.delete(i);
+        for (int i = 22; i <= 30; ++i)
+            nbaTeamsbyRank.delete(i);
+        nbaTeamsbyRank.delete(21);
+        System.out.println(nbaTeamsbyRank);*/
+
+        Random rand = new Random();
+        int min = -1;
+        int max = 31;
+        for (int i = 1; i <= 100; ++i) {
+            int randInt = rand.nextInt((max - min) + 1) + min;
+            System.out.println("nbaTeamsbyRank.delete(" + randInt + ");");
+            nbaTeamsbyRank.delete(randInt);
+        }
+        System.out.println(nbaTeamsbyRank);
     }
 }
