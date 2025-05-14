@@ -61,7 +61,7 @@ public class BSTMap<Key extends Comparable<Key>, Value> {
         assert(isBST());
     }
 
-    public Value rank(int k) {
+    public Value select(int k) {
         if (k < 1)
             throw new IllegalArgumentException();
         if (k > size())

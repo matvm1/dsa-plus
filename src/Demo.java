@@ -319,9 +319,9 @@ public class Demo {
         nbaRankings.insert(15, "Orlando Magic");
         System.out.println(nbaRankings);
         System.out.println(nbaRankings.size());
-        System.out.println(nbaRankings.rank(1));
-        System.out.println(nbaRankings.rank(14));
-        System.out.println(nbaRankings.rank(29));
-        System.out.println(nbaRankings.rank(12));
+        System.out.println(nbaRankings.select(1));
+        System.out.println(nbaRankings.select(14));
+        System.out.println(nbaRankings.select(29));
+        System.out.println(nbaRankings.select(12));
     }
 }
