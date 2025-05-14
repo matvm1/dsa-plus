@@ -13,6 +13,10 @@ public class BSTMap<Key extends Comparable<Key>, Value> {
         return size(root);
     }
 
+    public boolean isEmpty() {
+        return root == null;
+    }
+
     public void insert(Key key, Value value) {
         if (key == null)
             throw new IllegalArgumentException();
@@ -116,14 +120,29 @@ public class BSTMap<Key extends Comparable<Key>, Value> {
         int cmp = key.compareTo(searchNode.key);
         // search for the node to delete
         while (cmp != 0) {
+            searchNode.size--;
             parent = searchNode;
             if (cmp < 0)
                 searchNode = searchNode.left;
             else
                 searchNode = searchNode.right;
             if (searchNode == null)
-                return;
+                break;
             cmp = key.compareTo(searchNode.key);
+        }
+
+        // readjust sizes if search node was not found
+        if (searchNode == null) {
+            searchNode = root;
+            while (searchNode != null) {
+                searchNode.size++;
+                cmp = key.compareTo(searchNode.key);
+                if (cmp < 0)
+                    searchNode = searchNode.left;
+                else
+                    searchNode = searchNode.right;
+            }
+            return;
         }
 
         // check if the node being deleted is the root
@@ -155,6 +174,7 @@ public class BSTMap<Key extends Comparable<Key>, Value> {
             Node<Key, Value> successor = searchNode.right;
             while (successor.left != null) {
                 successorParent = successor;
+                successor.size--;
                 successor = successor.left;
             }
             if (isDeletingFromParentLeft)
@@ -162,6 +182,7 @@ public class BSTMap<Key extends Comparable<Key>, Value> {
             else
                 parent.right = successor;
 
+            successor.size = searchNode.size - 1;
             successor.left = searchNode.left;
             // check that the successor's parent isnt being deleted
             if (!successorParent.key.equals(searchNode.key)) {
@@ -208,7 +229,8 @@ public class BSTMap<Key extends Comparable<Key>, Value> {
         return sb;
     }
 
-    private boolean isBST() {
+    // checks that BST follows symmetric ordering and sizes of nodes are correct
+    public boolean isBST() {
         return isBST(root, null, null);
     }
 
@@ -218,6 +240,12 @@ public class BSTMap<Key extends Comparable<Key>, Value> {
         if ((min != null && node.key.compareTo(min) <= 0) ||
                 (max != null && node.key.compareTo(max) >= 0))
             return false;
+        if (node.size != 1 + size(node.left) + size(node.right)) {
+            System.err.println("Node: <" + node.key + ", " + node.value + "> size: " + node.size + ", " +
+                    "left " +
+                    "size: " + size(node.left) + ", right size: " + size(node.right));
+            return false;
+        }
         return isBST(node.left, min, node.key) && isBST(node.right, node.key, max);
     }
 

@@ -331,7 +331,8 @@ public class Demo {
             System.out.println(nbaTeamsbyRank.rank(i));
 
         System.out.println("Test delete(): ");
-        /*nbaTeamsbyRank.delete(4);
+        nbaTeamsbyRank.delete(8);
+        nbaTeamsbyRank.delete(4);
         nbaTeamsbyRank.delete(2);
         nbaTeamsbyRank.delete(15);
         nbaTeamsbyRank.delete(16);
@@ -340,7 +341,7 @@ public class Demo {
         nbaTeamsbyRank.delete(20);
         nbaTeamsbyRank.delete(9);
         nbaTeamsbyRank.delete(-1);
-        nbaTeamsbyRank.delete(31);*/
+        nbaTeamsbyRank.delete(31);
 
         /*nbaTeamsbyRank.delete(29);
         nbaTeamsbyRank.delete(0);
@@ -385,5 +386,18 @@ public class Demo {
             nbaTeamsbyRank.delete(randInt);
         }
         System.out.println(nbaTeamsbyRank);
+
+        int numRandTrials = 1000;
+        for (int i = 0; i < numRandTrials; ++i) {
+            BSTMap<Double, String> randTest = new BSTMap<>();
+            min = -50000;
+            max = min * -1;
+            for (int j = 0; j < 10000; ++j)
+                randTest.insert(rand.nextDouble((max - min) + 1) + min, "test");
+            for (int j = 0; j < 100000; ++j)
+                randTest.delete(rand.nextDouble((max - min) + 1) + min);
+            if (!randTest.isBST())
+                System.out.println("scream");
+        }
     }
 }
